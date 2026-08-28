@@ -111,8 +111,8 @@ export const printGraph = (graph) => {
     for (const [depName, state] of constraints) {
       const status = state.conflict ? "❌ CONFLICT" : "✅ OK";
       console.log(`${depName} [${status}]`);
-      for (const r of state.ranges) {
-        console.log(`  └── requested ${r.range} by ${r.requestedBy}`);
+      for (const r of state.constraints) {
+        console.log(`  └── requested ${r.range} by ${r.requester}`);
       }
       console.log();
     }

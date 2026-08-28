@@ -5,7 +5,7 @@ const REGISTRY_URL = "https://registry.npmjs.org";
 
 const metadataCache = new Map();
 
-async function getPackageMetadata(name) {
+export async function getPackageMetadata(name) {
   if (metadataCache.has(name)) {
     return metadataCache.get(name);
   }

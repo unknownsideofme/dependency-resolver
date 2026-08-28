@@ -1,45 +1,66 @@
 import semver from "semver";
 
 const constraints = new Map();
+
 const conflicts = new Set();
 
-export const addConstraint = ( dependencyName , dependencyRange , requestedBy ) => {
-  // First time seeing this dependency
+export function addConstraint(
+  dependencyName,
+  dependencyRange,
+  requestedBy
+) {
+
   if (!constraints.has(dependencyName)) {
-    constraints.set(dependencyName, {
-      ranges: [
-        {
-          range: dependencyRange,
-          requestedBy
-        }
-      ],
 
-      conflict: false
-    });
+    constraints.set(
+      dependencyName,
+      {
+        constraints: [],
+        conflict: false
+      }
+    );
+  }
 
+  const state =
+    constraints.get(dependencyName);
+
+  // Avoid duplicate constraints
+  const alreadyExists =
+    state.constraints.some(
+      item =>
+        item.requester === requestedBy &&
+        item.range === dependencyRange
+    );
+
+  if (alreadyExists) {
     return;
   }
 
-  const state = constraints.get(dependencyName);
+  // Check against existing constraints
+  for (
+    const existing
+    of state.constraints
+  ) {
 
-  // Check the new range against the existing
-  // combined constraint.
-  const compatible = state.ranges.every((existing) =>
-    semver.intersects(
-      existing.range,
-      dependencyRange
-    )
-  );
+    const compatible =
+      semver.intersects(
+        existing.range,
+        dependencyRange
+      );
 
-  if (!compatible) {
-    state.conflict = true;
+    if (!compatible) {
 
-    conflicts.add(dependencyName);
+      state.conflict = true;
+
+      conflicts.add(
+        dependencyName
+      );
+    }
   }
 
-  state.ranges.push({
-    range: dependencyRange,
-    requestedBy
+  state.constraints.push({
+    requester: requestedBy,
+    range: dependencyRange
   });
 }
 
