@@ -5,7 +5,8 @@ async function main() {
   const packageJson =
     JSON.parse(
       fs.readFileSync(
-        "./package.json",
+       //"./package.json",
+       "./test/test-config/test-package.json",
         "utf-8"
       )
     );
