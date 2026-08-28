@@ -3,28 +3,46 @@ import {
   getPackageVersion
 } from "./registry.js";
 
+import {
+  addConstraint,
+  getConstraints,
+  getConflicts
+} from "./constraint.js";
+
 export const buildGraph = async (rootDependencies) => {
 
   const graph = new Map();
 
-  const visit = async (name, range) => {
+  async function visit(
+    name,
+    range,
+    requestedBy
+  ) {
 
     console.log(
       `Resolving ${name} ${range}...`
     );
 
-    // Find a real version satisfying the range
+    // Record constraint immediately
+    addConstraint(
+      name,
+      range,
+      requestedBy
+    );
+
     const version =
-      await resolveVersion(name, range);
+      await resolveVersion(
+        name,
+        range
+      );
 
     const key = `${name}@${version}`;
 
-    // Already visited?
+    // Already processed?
     if (graph.has(key)) {
       return;
     }
 
-    // Get metadata for this exact version
     const packageData =
       await getPackageVersion(
         name,
@@ -40,37 +58,67 @@ export const buildGraph = async (rootDependencies) => {
 
     graph.set(key, node);
 
-    // Recursively visit dependencies
+    // Visit dependencies
     for (
-      const [dependencyName, dependencyRange]
+      const [
+        dependencyName,
+        dependencyRange
+      ]
       of Object.entries(node.dependencies)
     ) {
 
       await visit(
         dependencyName,
-        dependencyRange
+        dependencyRange,
+        `${name}@${version}`
       );
     }
   }
 
-  // Start from application's dependencies
+  // Root dependencies
   for (
-    const [name, range]
+    const [
+      name,
+      range
+    ]
     of Object.entries(rootDependencies)
   ) {
 
-    await visit(name, range);
+    await visit(
+      name,
+      range,
+      "ROOT"
+    );
   }
 
   return graph;
 }
 
 export const printGraph = (graph) => {
-    for (const [key, node] of graph) {
-        console.log(key);
-        for (const [name, range] of Object.entries(node.dependencies)) {
-            console.log(`  └── ${name} ${range}`);
-        }
-        console.log();
+  for (const [key, node] of graph) {
+    console.log(key);
+    for (const [name, range] of Object.entries(node.dependencies)) {
+      console.log(`  └── ${name} ${range}`);
     }
+    console.log();
+  }
+
+  const constraints = getConstraints();
+  const conflicts = getConflicts();
+
+  if (constraints.size > 0) {
+    console.log("========== CONSTRAINTS & CONFLICTS ==========\n");
+    for (const [depName, state] of constraints) {
+      const status = state.conflict ? "❌ CONFLICT" : "✅ OK";
+      console.log(`${depName} [${status}]`);
+      for (const r of state.ranges) {
+        console.log(`  └── requested ${r.range} by ${r.requestedBy}`);
+      }
+      console.log();
+    }
+
+    if (conflicts.size > 0) {
+      console.log(`⚠️ Conflicts detected in ${conflicts.size} package(s): ${Array.from(conflicts).join(", ")}\n`);
+    }
+  }
 }
