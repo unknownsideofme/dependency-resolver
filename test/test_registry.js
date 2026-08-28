@@ -1,4 +1,4 @@
-import { getPackageMetadata , getPackageVersion , resolveVersion} from "../src/registry.js";
+import { getPackageMetadata , getPackageVersion , resolveVersion, getVersions} from "../src/registry.js";
 
 export const testgetPackageMetadata = async (pkgName) =>{
     try{
@@ -25,6 +25,16 @@ export const testResolveVersion = async (pkgName,range) =>{
     try {
         const version = await resolveVersion(pkgName,range);
         return JSON.parse(JSON.stringify(version,null,2));
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+export const testGetVersions = async (pkgName) => {
+    try {
+        const versions = await getVersions(pkgName);
+        return JSON.parse(JSON.stringify(versions,null,2));
     }
     catch (error) {
         console.log(error);
