@@ -1,4 +1,4 @@
-# node-dep-resolver 📦
+# node-dep-resolver
 
 > A lightweight, transparent JavaScript dependency graph builder and semver conflict resolution engine with backtracking search.
 
@@ -9,17 +9,17 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 🌲 **Dependency Graph Visualization**: Recursively traces root and transitive dependencies, rendering clear ASCII tree structures.
-- ⚠️ **Semver Conflict Detection**: Identifies overlapping or incompatible version constraints requested across different packages.
-- 🔄 **Backtracking Resolution Engine**: Evaluates alternative candidate package versions to automatically resolve conflicts.
-- 🚀 **CLI & Programmatic Library**: Use instantly via `npx node-dep-resolver` or import into Node.js ES Module projects.
-- 🧪 **Native Unit Testing**: High-reliability codebase verified using Node.js native `node:test` framework.
+- **Dependency Graph Visualization**: Recursively traces root and transitive dependencies, rendering clear ASCII tree structures.
+- **Semver Conflict Detection**: Identifies overlapping or incompatible version constraints requested across different packages.
+- **Backtracking Resolution Engine**: Evaluates alternative candidate package versions to automatically resolve conflicts.
+- **CLI & Programmatic Library**: Use instantly via `npx node-dep-resolver` or import into Node.js ES Module projects.
+- **Native Unit Testing**: High-reliability codebase verified using Node.js native `node:test` framework.
 
 ---
 
-## 🛠️ Installation & CLI Usage
+## Installation & CLI Usage
 
 You can run the CLI directly on any `package.json` file without installing:
 
@@ -64,7 +64,7 @@ Starting resolution...
 
 ---
 
-## 💻 Programmatic Usage (Node.js / ESM)
+## Programmatic Usage (Node.js / ESM)
 
 Install as a dependency in your Node.js project:
 
@@ -99,7 +99,7 @@ console.log(`Resolved axios version: ${resolvedVersion}`);
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 Built with a modular, Object-Oriented design:
 
@@ -112,6 +112,6 @@ Built with a modular, Object-Oriented design:
 
 ---
 
-## 📄 License
+## License
 
-MIT © [debanjan](https://github.com/unknownsideofme/dependency-resolver)
+MIT (c) [debanjan](https://github.com/unknownsideofme/dependency-resolver)
