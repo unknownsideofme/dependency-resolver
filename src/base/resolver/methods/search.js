@@ -2,11 +2,11 @@ export default async function search() {
   const conflict = this.getFirstConflict();
 
   if (!conflict) {
-    console.log("\n✅ Valid dependency tree found.");
+    console.log("\n[SUCCESS] Valid dependency tree found.");
     return new Map(this.selected);
   }
 
-  console.log(`\n❌ Conflict: ${conflict.packageName}`);
+  console.log(`\n[CONFLICT] ${conflict.packageName}`);
 
   const candidates = await this.candidates.generateCandidates(conflict);
 
@@ -32,7 +32,7 @@ export default async function search() {
     }
 
     this.restoreSnapshot(snapshot);
-    console.log("↩️ Backtracking...");
+    console.log("[BACKTRACKING] Backtracking...");
   }
 
   return null;

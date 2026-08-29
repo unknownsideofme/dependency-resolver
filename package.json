@@ -1,16 +1,39 @@
 {
-  "name": "dep-graph",
+  "name": "@unknownsideofme/dependency-resolver",
   "version": "1.0.0",
-  "description": "dev version ",
-  "license": "ISC",
-  "author": "debanjan",
+  "description": "A lightweight CLI tool & library to build dependency graphs and resolve semver conflicts.",
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
+  "main": "src/index.js",
+  "bin": {
+    "dep-resolver": "bin/cli.js"
   },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "bin"
+  ],
+  "scripts": {
+    "test": "node --test test/*.js",
+    "start": "node bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unknownsideofme/dependency-resolver.git"
+  },
+  "keywords": [
+    "cli",
+    "dependency-resolver",
+    "semver",
+    "dependency-graph",
+    "conflict-resolution",
+    "backtracking"
+  ],
+  "author": "debanjan",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^1.20.0",
-    "semver": "^7.8.5"
+    "axios": "^1.7.0",
+    "semver": "^7.6.0"
   }
 }

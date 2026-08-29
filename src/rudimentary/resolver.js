@@ -237,7 +237,7 @@ export class Resolver {
         if (!conflict) {
 
             console.log(
-                "\n✅ Valid dependency tree found."
+                "\n[SUCCESS] Valid dependency tree found."
             );
 
             return new Map(
@@ -246,7 +246,7 @@ export class Resolver {
         }
 
         console.log(
-            `\n❌ Conflict: ${conflict.packageName}`
+            `\n[CONFLICT] ${conflict.packageName}`
         );
 
         const candidates =
@@ -294,7 +294,7 @@ export class Resolver {
             );
 
             console.log(
-                "↩️ Backtracking..."
+                "[BACKTRACKING] Backtracking..."
             );
         }
 
