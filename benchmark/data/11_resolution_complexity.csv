@@ -1,5 +1,5 @@
 Scenario,Conflicts,Candidates,Backtracks,Pruned,Time (ms),Formatted Time
 "Simple",2,8,0,14,4,4ms
-"Moderate",8,31,3,42,15,15ms
-"Dense",15,126,12,89,44,44ms
-"Adversarial",25,480,41,395,165,165ms
+"Moderate",8,31,3,42,16,16ms
+"Dense",15,126,12,89,52,52ms
+"Adversarial",25,480,41,395,184,184ms
