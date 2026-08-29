@@ -1,0 +1,14 @@
+--- SCENARIO BENCHMARK ---
+Scenario,Conflicts,Candidates,Backtracks,Resolution Time (ms),Formatted Time
+Simple conflict,1,2,0,1.00,1 ms
+Transitive conflict,3,7,2,1.00,1 ms
+Nested conflict,8,31,12,1.00,1 ms
+Dense conflict,15,126,57,1.00,1 ms
+Highly constrained,25,480,219,1.00,1 ms
+
+--- CONFLICT SCALING BENCHMARK ---
+Conflicts,Resolution Time (ms),Formatted Time
+10,5.00,5 ms
+20,5.54,6 ms
+30,6.05,6 ms
+40,7.45,7 ms

@@ -1,0 +1,16 @@
+Metric,Value
+Config package pool,5000
+Packages fetched via Registry.getPackageMetadata(),40
+Constraints added via Constraint.addConstraint(),394
+Conflicts detected (Constraint.getConflicts().size),7
+Resolver conflicts (Resolver.checkConflict()),7
+Solutions discovered,7
+Best solution,#3 (major required)
+Changes required,7
+Major upgrades,5
+Minor upgrades,0
+Patch upgrades,0
+Duplicate version packages,0
+Backtracks (createSnapshot + restoreSnapshot),10
+Registry + Constraint phase (ms),2191.73
+Resolver phase (ms),2.22

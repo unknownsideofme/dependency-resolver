@@ -1,0 +1,945 @@
+{
+  "meta": {
+    "generatedAt": "2026-08-29T16:57:03.102Z",
+    "source": "benchmark/data/*.csv",
+    "description": "Benchmark metrics for the node-dep-resolver dependency resolver"
+  },
+  "benchmarks": {
+    "graphConstruction": {
+      "id": 1,
+      "name": "Graph Construction",
+      "description": "Time and memory to build the dependency graph for N packages",
+      "rows": [
+        {
+          "Target Packages": 100,
+          "Packages Analyzed": 53,
+          "Dependency Edges": 52,
+          "Unique Packages": 51,
+          "Max Depth": 4,
+          "Time (ms)": 0.08,
+          "Formatted Time": 0,
+          "Memory (MB)": 1.4,
+          "Formatted Memory": "1.4 MB"
+        },
+        {
+          "Target Packages": 500,
+          "Packages Analyzed": 1047,
+          "Dependency Edges": 1727,
+          "Unique Packages": 787,
+          "Max Depth": 40,
+          "Time (ms)": 0.58,
+          "Formatted Time": 1,
+          "Memory (MB)": 6.7,
+          "Formatted Memory": "6.7 MB"
+        },
+        {
+          "Target Packages": 1000,
+          "Packages Analyzed": 4051,
+          "Dependency Edges": 11221,
+          "Unique Packages": 2127,
+          "Max Depth": 398,
+          "Time (ms)": 7.68,
+          "Formatted Time": 8,
+          "Memory (MB)": 5.6,
+          "Formatted Memory": "5.6 MB"
+        },
+        {
+          "Target Packages": 5000,
+          "Packages Analyzed": 19571,
+          "Dependency Edges": 68610,
+          "Unique Packages": 6671,
+          "Max Depth": 3011,
+          "Time (ms)": 17.47,
+          "Formatted Time": 17,
+          "Memory (MB)": 66.1,
+          "Formatted Memory": "66.1 MB"
+        }
+      ],
+      "chart": {
+        "labels": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "datasets": [
+          {
+            "label": "Edges",
+            "data": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "label": "Time (ms)",
+            "data": [
+              0.08,
+              0.58,
+              7.68,
+              17.47
+            ]
+          },
+          {
+            "label": "Memory (MB)",
+            "data": [
+              1.4,
+              6.7,
+              5.6,
+              66.1
+            ]
+          }
+        ]
+      }
+    },
+    "constraintProcessing": {
+      "id": 2,
+      "name": "Constraint Processing (Naive vs. Indexed)",
+      "description": "Conflict detection time: O(n²) naive scan vs O(1) indexed Map",
+      "rows": [
+        {
+          "Constraint Count": 100,
+          "Label": 100,
+          "Naive Time (ms)": 0.25,
+          "Indexed Time (ms)": 0.08,
+          "Speedup": 3.06
+        },
+        {
+          "Constraint Count": 500,
+          "Label": 500,
+          "Naive Time (ms)": 0.58,
+          "Indexed Time (ms)": 0.15,
+          "Speedup": 3.95
+        },
+        {
+          "Constraint Count": 1000,
+          "Label": "1K",
+          "Naive Time (ms)": 2.13,
+          "Indexed Time (ms)": 0.12,
+          "Speedup": 18.22
+        },
+        {
+          "Constraint Count": 5000,
+          "Label": "5K",
+          "Naive Time (ms)": 57.9,
+          "Indexed Time (ms)": 0.7,
+          "Speedup": 82.54
+        },
+        {
+          "Constraint Count": 10000,
+          "Label": "10K",
+          "Naive Time (ms)": 80.48,
+          "Indexed Time (ms)": 1.94,
+          "Speedup": 41.56
+        },
+        {
+          "Constraint Count": 50000,
+          "Label": "50K",
+          "Naive Time (ms)": 291.76,
+          "Indexed Time (ms)": 1.83,
+          "Speedup": 159.39
+        }
+      ],
+      "chart": {
+        "labels": [
+          100,
+          500,
+          1000,
+          5000,
+          10000,
+          50000
+        ],
+        "datasets": [
+          {
+            "label": "Naive Time (ms)",
+            "data": [
+              0.25,
+              0.58,
+              2.13,
+              57.9,
+              80.48,
+              291.76
+            ]
+          },
+          {
+            "label": "Indexed Time (ms)",
+            "data": [
+              0.08,
+              0.15,
+              0.12,
+              0.7,
+              1.94,
+              1.83
+            ]
+          }
+        ]
+      }
+    },
+    "registryCache": {
+      "id": 3,
+      "name": "Registry Cache Efficiency",
+      "description": "Registry request count, cache hit ratio, and fetch time with/without cache",
+      "rows": [
+        {
+          "Mode": "No Cache",
+          "Registry Requests": 120,
+          "Cache Hits": 0,
+          "Cache Hit Ratio": 0,
+          "Network Time (s)": 2.52,
+          "Total Resolution Time (s)": 2.52
+        },
+        {
+          "Mode": "Cache",
+          "Registry Requests": 37,
+          "Cache Hits": 83,
+          "Cache Hit Ratio": 69.2,
+          "Network Time (s)": 0.78,
+          "Total Resolution Time (s)": 0.78
+        }
+      ],
+      "chart": null,
+      "summary": {
+        "No Cache": 120,
+        "Cache": 37
+      }
+    },
+    "backtracking": {
+      "id": 4,
+      "name": "Backtracking",
+      "description": "Conflicts, candidates explored, and backtracks per resolution scenario",
+      "rows": [
+        {
+          "--- SCENARIO BENCHMARK ---": "Scenario"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Simple conflict"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Transitive conflict"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Nested conflict"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Dense conflict"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Highly constrained"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "--- CONFLICT SCALING BENCHMARK ---"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": "Conflicts"
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": 10
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": 20
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": 30
+        },
+        {
+          "--- SCENARIO BENCHMARK ---": 40
+        }
+      ],
+      "chart": {
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "datasets": [
+          {
+            "label": "Conflicts",
+            "data": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "label": "Candidates",
+            "data": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "label": "Backtracks",
+            "data": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "candidatePruning": {
+      "id": 5,
+      "name": "Candidate Pruning",
+      "description": "Real-world constraint ingestion and search space reduction via generateCandidates()",
+      "rows": [
+        {
+          "Metric": "Config package pool (large-package.json)",
+          "Value": 5000
+        },
+        {
+          "Metric": "Packages fetched via Registry.getPackageMetadata()",
+          "Value": 30
+        },
+        {
+          "Metric": "Constraints added via Constraint.addConstraint()",
+          "Value": 313
+        },
+        {
+          "Metric": "Real conflicts detected (Constraint.getConflicts().size)",
+          "Value": 3
+        },
+        {
+          "Metric": "Conflict package",
+          "Value": "commander"
+        },
+        {
+          "Metric": "Candidates from generateCandidates()",
+          "Value": 99
+        },
+        {
+          "Metric": "Total version ranges in constraint map",
+          "Value": 313
+        },
+        {
+          "Metric": "Candidate reduction",
+          "Value": 68.4
+        },
+        {
+          "Metric": "generateCandidates() duration (ms)",
+          "Value": 3.6
+        }
+      ],
+      "summary": {
+        "Config package pool (large-package.json)": 5000,
+        "Packages fetched via Registry.getPackageMetadata()": 30,
+        "Constraints added via Constraint.addConstraint()": 313,
+        "Real conflicts detected (Constraint.getConflicts().size)": 3,
+        "Conflict package": "commander",
+        "Candidates from generateCandidates()": 99,
+        "Total version ranges in constraint map": 313,
+        "Candidate reduction": 68.4,
+        "generateCandidates() duration (ms)": 3.6
+      }
+    },
+    "resolutionQuality": {
+      "id": 6,
+      "name": "Resolution Quality",
+      "description": "Conflict classification, solution ranking, and upgrade impact analysis",
+      "rows": [
+        {
+          "Metric": "Config package pool",
+          "Value": 5000
+        },
+        {
+          "Metric": "Packages fetched via Registry.getPackageMetadata()",
+          "Value": 40
+        },
+        {
+          "Metric": "Constraints added via Constraint.addConstraint()",
+          "Value": 394
+        },
+        {
+          "Metric": "Conflicts detected (Constraint.getConflicts().size)",
+          "Value": 7
+        },
+        {
+          "Metric": "Resolver conflicts (Resolver.checkConflict())",
+          "Value": 7
+        },
+        {
+          "Metric": "Solutions discovered",
+          "Value": 7
+        },
+        {
+          "Metric": "Best solution",
+          "Value": "#3 (major required)"
+        },
+        {
+          "Metric": "Changes required",
+          "Value": 7
+        },
+        {
+          "Metric": "Major upgrades",
+          "Value": 5
+        },
+        {
+          "Metric": "Minor upgrades",
+          "Value": 0
+        },
+        {
+          "Metric": "Patch upgrades",
+          "Value": 0
+        },
+        {
+          "Metric": "Duplicate version packages",
+          "Value": 0
+        },
+        {
+          "Metric": "Backtracks (createSnapshot + restoreSnapshot)",
+          "Value": 10
+        },
+        {
+          "Metric": "Registry + Constraint phase (ms)",
+          "Value": 2191.73
+        },
+        {
+          "Metric": "Resolver phase (ms)",
+          "Value": 2.22
+        }
+      ],
+      "summary": {
+        "Config package pool": 5000,
+        "Packages fetched via Registry.getPackageMetadata()": 40,
+        "Constraints added via Constraint.addConstraint()": 394,
+        "Conflicts detected (Constraint.getConflicts().size)": 7,
+        "Resolver conflicts (Resolver.checkConflict())": 7,
+        "Solutions discovered": 7,
+        "Best solution": "#3 (major required)",
+        "Changes required": 7,
+        "Major upgrades": 5,
+        "Minor upgrades": 0,
+        "Patch upgrades": 0,
+        "Duplicate version packages": 0,
+        "Backtracks (createSnapshot + restoreSnapshot)": 10,
+        "Registry + Constraint phase (ms)": 2191.73,
+        "Resolver phase (ms)": 2.22
+      }
+    },
+    "capabilityMatrix": {
+      "id": 7,
+      "name": "Capability Comparison (vs npm)",
+      "description": "Feature-by-feature comparison between npm and this resolver",
+      "rows": [
+        {
+          "Capability": "Parse package.json",
+          "npm": "YES",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Build dependency graph",
+          "npm": "YES",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Detect semver conflicts",
+          "npm": "Internal",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Explain conflict cause",
+          "npm": "Limited",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Generate alternative solutions",
+          "npm": "Internal",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Rank alternatives",
+          "npm": "N/A",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Show backtracking",
+          "npm": "N/A",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Benchmark resolution",
+          "npm": "N/A",
+          "node-dep-resolver": "YES"
+        },
+        {
+          "Capability": "Visualize graph",
+          "npm": "N/A",
+          "node-dep-resolver": "YES"
+        }
+      ]
+    },
+    "realWorldProjects": {
+      "id": 8,
+      "name": "Real-World NPM Projects",
+      "description": "Graph construction, constraint ingestion, and conflict detection across project profiles",
+      "rows": [
+        {
+          "Project": "Express app",
+          "Packages Fetched": 20,
+          "Graph Nodes": 20,
+          "Edges": 0,
+          "Conflicts": 7,
+          "Constraint (ms)": 0.1,
+          "Resolver (ms)": 0,
+          "Total (ms)": 0.1
+        },
+        {
+          "Project": "Vite app",
+          "Packages Fetched": 25,
+          "Graph Nodes": 25,
+          "Edges": 62,
+          "Conflicts": 6,
+          "Constraint (ms)": 0.1,
+          "Resolver (ms)": 0,
+          "Total (ms)": 0.2
+        },
+        {
+          "Project": "Next app",
+          "Packages Fetched": 35,
+          "Graph Nodes": 35,
+          "Edges": 370,
+          "Conflicts": 4,
+          "Constraint (ms)": 0.8,
+          "Resolver (ms)": 2.2,
+          "Total (ms)": 3
+        },
+        {
+          "Project": "Large project",
+          "Packages Fetched": 50,
+          "Graph Nodes": 50,
+          "Edges": 561,
+          "Conflicts": 19,
+          "Constraint (ms)": 11117.1,
+          "Resolver (ms)": 4.1,
+          "Total (ms)": 11121.2
+        }
+      ],
+      "chart": {
+        "labels": [
+          "Express app",
+          "Vite app",
+          "Next app",
+          "Large project"
+        ],
+        "datasets": [
+          {
+            "label": "Edges",
+            "data": [
+              0,
+              62,
+              370,
+              561
+            ]
+          },
+          {
+            "label": "Conflicts",
+            "data": [
+              7,
+              6,
+              4,
+              19
+            ]
+          },
+          {
+            "label": "Total (ms)",
+            "data": [
+              0.1,
+              0.2,
+              3,
+              11121.2
+            ]
+          }
+        ]
+      }
+    },
+    "accuracyCorrectness": {
+      "id": 9,
+      "name": "Accuracy / Correctness Corpus",
+      "description": "Pass/fail results across 160 correctness test cases",
+      "rows": [
+        {
+          "Suite": "Simple semver",
+          "Total": 40,
+          "Passed": 40,
+          "Failed": 0,
+          "Accuracy (%)": 100
+        },
+        {
+          "Suite": "Transitive conflicts",
+          "Total": 35,
+          "Passed": 35,
+          "Failed": 0,
+          "Accuracy (%)": 100
+        },
+        {
+          "Suite": "Peer dependencies",
+          "Total": 20,
+          "Passed": 19,
+          "Failed": 1,
+          "Accuracy (%)": 95
+        },
+        {
+          "Suite": "Prereleases",
+          "Total": 15,
+          "Passed": 15,
+          "Failed": 0,
+          "Accuracy (%)": 100
+        },
+        {
+          "Suite": "Impossible resolutions",
+          "Total": 20,
+          "Passed": 20,
+          "Failed": 0,
+          "Accuracy (%)": 100
+        },
+        {
+          "Suite": "Duplicate versions",
+          "Total": 30,
+          "Passed": 29,
+          "Failed": 1,
+          "Accuracy (%)": 96.67
+        },
+        {
+          "Suite": "Metric",
+          "Total": "Value",
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Config Package Pool",
+          "Total": 5000,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Total Cases",
+          "Total": 160,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Passed",
+          "Total": 158,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Failed",
+          "Total": 2,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Resolution Correctness",
+          "Total": 98.75,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "False Positives",
+          "Total": 0,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "False Negatives",
+          "Total": 2,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Valid Resolutions Incorrectly Rejected",
+          "Total": 0,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        },
+        {
+          "Suite": "Invalid Resolutions Incorrectly Accepted",
+          "Total": 0,
+          "Passed": null,
+          "Failed": null,
+          "Accuracy (%)": null
+        }
+      ],
+      "chart": {
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "datasets": [
+          {
+            "label": "Total",
+            "data": [
+              40,
+              35,
+              20,
+              15,
+              20,
+              30,
+              "Value",
+              5000,
+              160,
+              158,
+              2,
+              98.75,
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "label": "Passed",
+            "data": [
+              40,
+              35,
+              19,
+              15,
+              20,
+              29,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "label": "Failed",
+            "data": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "fuzzTesting": {
+      "id": 10,
+      "name": "Fuzz Testing Engine",
+      "description": "10,000 randomly generated graphs — invalid solutions accepted, conflicts discovered",
+      "rows": [
+        {
+          "Metric": "Config Package Pool",
+          "Value": 5000
+        },
+        {
+          "Metric": "Graphs generated",
+          "Value": 10000
+        },
+        {
+          "Metric": "Dependency edges",
+          "Value": 48291
+        },
+        {
+          "Metric": "Constraints",
+          "Value": 137402
+        },
+        {
+          "Metric": "Invalid solutions accepted",
+          "Value": 0
+        },
+        {
+          "Metric": "Conflicts discovered",
+          "Value": 3218
+        },
+        {
+          "Metric": "Resolution validity",
+          "Value": 100
+        },
+        {
+          "Metric": "Execution time",
+          "Value": 0.14
+        }
+      ],
+      "summary": {
+        "Config Package Pool": 5000,
+        "Graphs generated": 10000,
+        "Dependency edges": 48291,
+        "Constraints": 137402,
+        "Invalid solutions accepted": 0,
+        "Conflicts discovered": 3218,
+        "Resolution validity": 100,
+        "Execution time": 0.14
+      }
+    },
+    "resolutionComplexity": {
+      "id": 11,
+      "name": "Resolution Complexity Profiling",
+      "description": "Candidates, backtracks, and wall time across Simple → Adversarial scenarios",
+      "rows": [
+        {
+          "Scenario": "Simple",
+          "Conflicts": 2,
+          "Candidates": 8,
+          "Backtracks": 0,
+          "Pruned": 14,
+          "Time (ms)": 4,
+          "Formatted Time": 4
+        },
+        {
+          "Scenario": "Moderate",
+          "Conflicts": 8,
+          "Candidates": 31,
+          "Backtracks": 3,
+          "Pruned": 42,
+          "Time (ms)": 15,
+          "Formatted Time": 15
+        },
+        {
+          "Scenario": "Dense",
+          "Conflicts": 15,
+          "Candidates": 126,
+          "Backtracks": 12,
+          "Pruned": 89,
+          "Time (ms)": 44,
+          "Formatted Time": 44
+        },
+        {
+          "Scenario": "Adversarial",
+          "Conflicts": 25,
+          "Candidates": 480,
+          "Backtracks": 41,
+          "Pruned": 395,
+          "Time (ms)": 165,
+          "Formatted Time": 165
+        }
+      ],
+      "chart": {
+        "labels": [
+          "Simple",
+          "Moderate",
+          "Dense",
+          "Adversarial"
+        ],
+        "datasets": [
+          {
+            "label": "Conflicts",
+            "data": [
+              2,
+              8,
+              15,
+              25
+            ]
+          },
+          {
+            "label": "Candidates",
+            "data": [
+              8,
+              31,
+              126,
+              480
+            ]
+          },
+          {
+            "label": "Backtracks",
+            "data": [
+              0,
+              3,
+              12,
+              41
+            ]
+          },
+          {
+            "label": "Pruned",
+            "data": [
+              14,
+              42,
+              89,
+              395
+            ]
+          },
+          {
+            "label": "Time (ms)",
+            "data": [
+              4,
+              15,
+              44,
+              165
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

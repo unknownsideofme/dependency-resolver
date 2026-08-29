@@ -1,0 +1,5 @@
+Target Packages,Packages Analyzed,Dependency Edges,Unique Packages,Max Depth,Time (ms),Formatted Time,Memory (MB),Formatted Memory
+100,53,52,51,4,0.08,0 ms,1.4,1.4 MB
+500,1047,1727,787,40,0.58,1 ms,6.7,6.7 MB
+1000,4051,11221,2127,398,7.68,8 ms,5.6,5.6 MB
+5000,19571,68610,6671,3011,17.47,17 ms,66.1,66.1 MB

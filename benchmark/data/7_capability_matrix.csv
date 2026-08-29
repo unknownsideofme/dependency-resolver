@@ -1,0 +1,10 @@
+Capability,npm,node-dep-resolver
+"Parse package.json",YES,YES
+"Build dependency graph",YES,YES
+"Detect semver conflicts",Internal,YES
+"Explain conflict cause",Limited,YES
+"Generate alternative solutions",Internal,YES
+"Rank alternatives",N/A,YES
+"Show backtracking",N/A,YES
+"Benchmark resolution",N/A,YES
+"Visualize graph",N/A,YES
