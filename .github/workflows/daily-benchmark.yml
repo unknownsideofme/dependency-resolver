@@ -30,13 +30,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Refresh npm package pool
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 0 * * 1'
-        run: node benchmark/config/scripts/package-gen.js
-        env:
-          NODE_NO_WARNINGS: "1"
-        continue-on-error: true
-
       - name: Run all 11 benchmark suites
         run: npm run benchmark
         env:
@@ -49,7 +42,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add benchmark/data/ benchmark/config/large-package.json
+          git add benchmark/data/
           if ! git diff --cached --quiet; then
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "chore(benchmark): daily run ${TIMESTAMP} [skip ci]"
