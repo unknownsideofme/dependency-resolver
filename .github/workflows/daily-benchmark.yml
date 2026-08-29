@@ -2,16 +2,15 @@ name: Daily Benchmark Suite
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # every day at 00:00 UTC
-    - cron: "0 0 * * 1"   # also explicitly flagged on Mondays for pool refresh
-  workflow_dispatch:       # manual trigger from the Actions tab
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   benchmark:
-    name: "Run Benchmarks and Export Metrics"
+    name: Run Benchmarks and Export Metrics
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -30,13 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Refresh the 5,000-package pool from npm registry.
-      # Only runs on Mondays (cron "0 0 * * 1") or manual dispatch
-      # to avoid hitting the npm API every single day.
       - name: Refresh npm package pool
-        if: >
-          github.event_name == 'workflow_dispatch' ||
-          github.event.schedule == '0 0 * * 1'
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 0 * * 1'
         run: node benchmark/config/scripts/package-gen.js
         env:
           NODE_NO_WARNINGS: "1"
@@ -52,20 +46,11 @@ jobs:
 
       - name: Commit benchmark results
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add benchmark/data/
-          git add benchmark/config/large-package.json
-
-          if git diff --cached --quiet; then
-            echo "No changes to benchmark data -- skipping commit."
-          else
+          git add benchmark/data/ benchmark/config/large-package.json
+          if ! git diff --cached --quiet; then
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
-            git commit -m "chore(benchmark): daily run ${TIMESTAMP}
-
-  - Updated 11 CSV files in benchmark/data/
-  - Regenerated benchmark/data/metrics.json
-  [skip ci]"
+            git commit -m "chore(benchmark): daily run ${TIMESTAMP} [skip ci]"
             git push
           fi
