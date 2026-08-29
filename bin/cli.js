@@ -2,8 +2,35 @@
 
 import fs from "fs";
 import path from "path";
+import semver from "semver";
 import Graph from "../src/base/graph/GraphClass.js";
 import Resolver from "../src/base/resolver/ResolverClass.js";
+
+function formatSolutionLine(name, packageData, requestedRange) {
+  if (requestedRange) {
+    const minVerObj = semver.minVersion(requestedRange);
+    const minVer = minVerObj ? minVerObj.version : requestedRange;
+
+    if (semver.valid(packageData.version) && semver.valid(minVer)) {
+      if (semver.gt(packageData.version, minVer)) {
+        return `  [UPGRADE] ${name}: ${minVer} -> ${packageData.version} (satisfies requested range '${requestedRange}')`;
+      } else if (semver.lt(packageData.version, minVer)) {
+        return `  [DOWNGRADE] ${name}: ${minVer} -> ${packageData.version} (satisfies requested range '${requestedRange}')`;
+      }
+    }
+    return `  [OK] ${name}: ${packageData.version} (satisfies requested range '${requestedRange}')`;
+  }
+
+  if (packageData.oldVersion && semver.valid(packageData.version) && semver.valid(packageData.oldVersion)) {
+    if (semver.gt(packageData.version, packageData.oldVersion)) {
+      return `  [UPGRADE] ${name}: ${packageData.oldVersion} -> ${packageData.version} (to resolve conflict)`;
+    } else if (semver.lt(packageData.version, packageData.oldVersion)) {
+      return `  [DOWNGRADE] ${name}: ${packageData.oldVersion} -> ${packageData.version} (to resolve conflict)`;
+    }
+  }
+
+  return `  [OK] ${name}: ${packageData.version} (requested by ${packageData.requestedBy || 'ROOT'})`;
+}
 
 async function runCli() {
   const targetPath = process.argv[2] || "./package.json";
@@ -45,11 +72,7 @@ async function runCli() {
   console.log("\n========== RESOLVED DEPENDENCY SOLUTION ==========\n");
   for (const [name, packageData] of solution) {
     const requestedRange = dependencies[name];
-    if (requestedRange) {
-      console.log(`  [OK] ${name}: ${packageData.version} (satisfies requested range '${requestedRange}')`);
-    } else {
-      console.log(`  [OK] ${name}: ${packageData.version} (requested by ${packageData.requestedBy})`);
-    }
+    console.log(formatSolutionLine(name, packageData, requestedRange));
   }
   console.log();
 }
