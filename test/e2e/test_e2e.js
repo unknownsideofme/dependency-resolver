@@ -2,7 +2,6 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { execSync } from "child_process";
 import path from "path";
-import fs from "fs";
 
 test("E2E CLI Test Suite", async (t) => {
   const cliPath = path.resolve("./bin/cli.js");
@@ -20,7 +19,7 @@ test("E2E CLI Test Suite", async (t) => {
 
   await t.test("2. CLI handles missing file path cleanly", () => {
     try {
-      execSync(`node ${cliPath} ./non-existent-path.json`, { encoding: "utf-8" });
+      execSync(`node ${cliPath} ./test/test-config/missing-file.json`, { encoding: "utf-8" });
       assert.fail("Should have failed for non-existent file path");
     } catch (err) {
       assert.match(err.stderr || err.stdout, /\[ERROR\] File not found/);
@@ -28,33 +27,21 @@ test("E2E CLI Test Suite", async (t) => {
   });
 
   await t.test("3. CLI handles corrupted JSON structure", () => {
-    const tempFile = path.resolve("./scratch_corrupted_e2e.json");
-    fs.writeFileSync(tempFile, "{ corrupted json syntax");
+    const targetFile = path.resolve("./test/test-config/corrupted-package.json");
 
     try {
-      execSync(`node ${cliPath} ${tempFile}`, { encoding: "utf-8" });
+      execSync(`node ${cliPath} ${targetFile}`, { encoding: "utf-8" });
       assert.fail("Should have failed for corrupted JSON");
     } catch (err) {
       assert.match(err.stderr || err.stdout, /\[ERROR\] Failed to parse JSON/);
-    } finally {
-      if (fs.existsSync(tempFile)) {
-        fs.unlinkSync(tempFile);
-      }
     }
   });
 
   await t.test("4. CLI handles empty dependencies object", () => {
-    const tempFile = path.resolve("./scratch_empty_e2e.json");
-    fs.writeFileSync(tempFile, JSON.stringify({ dependencies: {} }));
+    const targetFile = path.resolve("./test/test-config/empty-package.json");
 
-    try {
-      const output = execSync(`node ${cliPath} ${tempFile}`, { encoding: "utf-8" });
-      assert.match(output, /\[INFO\] No dependencies found/);
-    } finally {
-      if (fs.existsSync(tempFile)) {
-        fs.unlinkSync(tempFile);
-      }
-    }
+    const output = execSync(`node ${cliPath} ${targetFile}`, { encoding: "utf-8" });
+    assert.match(output, /\[INFO\] No dependencies found/);
   });
 
   await t.test("5. CLI runs default execution on root package.json", () => {
