@@ -1,0 +1,18 @@
+Suite,Total,Passed,Failed,Accuracy (%)
+"Simple semver",40,40,0,100.00%
+"Transitive conflicts",35,35,0,100.00%
+"Peer dependencies",20,19,1,95.00%
+"Prereleases",15,15,0,100.00%
+"Impossible resolutions",20,20,0,100.00%
+"Duplicate versions",30,29,1,96.67%
+
+Metric,Value
+Config Package Pool,5000
+Total Cases,160
+Passed,158
+Failed,2
+Resolution Correctness,98.75%
+False Positives,0
+False Negatives,2
+Valid Resolutions Incorrectly Rejected,0
+Invalid Resolutions Incorrectly Accepted,0

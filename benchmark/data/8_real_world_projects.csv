@@ -1,0 +1,5 @@
+Project,Packages Fetched,Graph Nodes,Edges,Conflicts,Constraint (ms),Resolver (ms),Total (ms)
+"Express app",20,20,0,7,0.1,0,0.1
+"Vite app",25,25,62,6,0.1,0,0.2
+"Next app",35,35,370,4,0.8,2.2,3
+"Large project",50,50,561,19,11117.1,4.1,11121.2

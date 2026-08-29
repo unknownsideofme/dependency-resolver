@@ -1,0 +1,10 @@
+Metric,Value
+Config package pool (large-package.json),5000
+Packages fetched via Registry.getPackageMetadata(),30
+Constraints added via Constraint.addConstraint(),313
+Real conflicts detected (Constraint.getConflicts().size),3
+Conflict package,commander
+Candidates from generateCandidates(),99
+Total version ranges in constraint map,313
+Candidate reduction,68.4%
+generateCandidates() duration (ms),3.6

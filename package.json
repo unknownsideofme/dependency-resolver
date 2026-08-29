@@ -18,7 +18,9 @@
     "test": "node scripts/test_runner.js",
     "test:unit": "node scripts/test_runner.js --unit",
     "test:e2e": "node scripts/test_runner.js --e2e",
-    "start": "node bin/cli.js"
+    "start": "node bin/cli.js",
+    "benchmark": "node benchmark/test/run_benchmarks.js",
+    "benchmark:export": "node benchmark/config/scripts/csv-to-json.js"
   },
   "repository": {
     "type": "git",

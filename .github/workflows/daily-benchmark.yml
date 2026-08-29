@@ -1,0 +1,81 @@
+name: Daily Benchmark Suite
+
+on:
+  # Run every day at 00:00 UTC
+  schedule:
+    - cron: "0 0 * * *"
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to commit metrics.json + CSVs back to the repo
+
+jobs:
+  benchmark:
+    name: Run Benchmarks & Export Metrics
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ─────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so the commit push works correctly
+          fetch-depth: 0
+
+      # ── 2. Setup Node.js ────────────────────────────────────────────────────
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # ── 3. Install dependencies ─────────────────────────────────────────────
+      - name: Install dependencies
+        run: npm ci
+
+      # ── 4. Refresh package pool (weekly on Mondays, otherwise skip) ─────────
+      #    Regenerates benchmark/config/large-package.json from npm registry BFS.
+      #    Rate-limited so we only do it once a week to avoid hammering the API.
+      - name: Refresh npm package pool (weekly)
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.event.schedule, '0 0 * * 1')
+        run: node benchmark/config/scripts/package-gen.js
+        env:
+          NODE_NO_WARNINGS: 1
+        continue-on-error: true   # don't fail the whole run if npm API is flaky
+
+      # ── 5. Run all 11 benchmark suites ─────────────────────────────────────
+      - name: Run benchmark suite
+        run: npm run benchmark
+        env:
+          NODE_NO_WARNINGS: 1
+          # Give the npm registry calls a generous timeout via axios defaults
+          AXIOS_TIMEOUT: "15000"
+
+      # ── 6. Export CSVs → metrics.json ──────────────────────────────────────
+      - name: Export metrics to JSON
+        run: npm run benchmark:export
+
+      # ── 7. Commit results back to main ──────────────────────────────────────
+      - name: Commit benchmark results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add benchmark/data/
+          git add benchmark/config/large-package.json
+
+          # Only commit if something changed
+          if git diff --cached --quiet; then
+            echo "No changes to benchmark data — skipping commit."
+          else
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+            git commit -m "chore(benchmark): daily run ${TIMESTAMP}
+
+  - Updated 11 CSV files in benchmark/data/
+  - Regenerated benchmark/data/metrics.json
+  [skip ci]"
+            git push
+          fi

@@ -1,0 +1,15 @@
+{
+  "name": "nextjs-dashboard",
+  "packages": 412,
+  "edges": 973,
+  "conflicts": 7,
+  "dependencies": {
+    "next": "^13.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.5",
+    "@tanstack/react-query": "^4.24.0",
+    "lucide-react": "^0.115.0",
+    "zod": "^3.20.6"
+  }
+}
