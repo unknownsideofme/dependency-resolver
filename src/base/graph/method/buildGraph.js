@@ -1,11 +1,11 @@
 import {
   resolveVersion,
   getPackageVersion
-} from "../../../registry.js";
+} from "../../../rudimentary/registry.js";
 
 import {
   addConstraint
-} from "../../../constraint.js";
+} from "../../../rudimentary/constraint.js";
 
 export default async function buildGraph(rootDependencies) {
   const graph = new Map();

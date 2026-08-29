@@ -1,33 +1,20 @@
-import { addConstraint, getConstraints, getConflicts } from '../src/constraint.js'
+import { test } from 'node:test';
+import assert from 'node:assert';
+import Constraint from '../src/base/constraints/ConstraintClass.js';
 
-export const testAddConstraint = ( dependencyMap) => {
-    for (const [ dependencyName, dependencyRange] of Object.entries(dependencyMap)) {
-        addConstraint( dependencyName, dependencyRange, "app");
-    }   
-    try {
-        console.log("Constraint added successfully!");
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+test('Constraint Class Test Suite', async (t) => {
+    const constraintInstance = new Constraint();
 
-export const testGetConstraints = () => {
-    try {
-        const constraints = getConstraints();
-        return constraints;
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+    await t.test('1. addConstraint & getConstraints', () => {
+        constraintInstance.addConstraint('axios', '^1.20.0', 'app');
+        const constraints = constraintInstance.getConstraints();
+        
+        assert.ok(constraints, 'Constraints Map should exist');
+        assert.strictEqual(constraints.has('axios'), true, 'Should contain axios constraint');
+    });
 
-export const testGetConflicts = () => {
-    try {
-        const conflicts = getConflicts();
-        return conflicts;
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+    await t.test('2. getConflicts', () => {
+        const conflicts = constraintInstance.getConflicts();
+        assert.ok(conflicts, 'Conflicts Set should exist');
+    });
+});

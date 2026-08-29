@@ -1,7 +1,7 @@
 import {
   getConstraints,
   getConflicts
-} from "../../../constraint.js";
+} from "../../../rudimentary/constraint.js";
 
 export default function printGraph(graph) {
   for (const [key, node] of graph) {
