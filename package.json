@@ -15,7 +15,8 @@
     "bin"
   ],
   "scripts": {
-    "test": "node --test test/*.js",
+    "test": "node --test test/test_*.js",
+    "test:e2e": "node --test test/test_e2e.js",
     "start": "node bin/cli.js"
   },
   "repository": {

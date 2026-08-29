@@ -3,7 +3,8 @@
 > A lightweight, transparent JavaScript dependency graph builder and semver conflict resolution engine with backtracking search.
 
 [![npm version](https://img.shields.io/npm/v/node-dep-resolver.svg)](https://www.npmjs.com/package/node-dep-resolver)
-[![build status](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/test.yml/badge.svg)](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/test.yml)
+[![unit tests](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/test.yml/badge.svg)](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/test.yml)
+[![e2e tests](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/e2e.yml/badge.svg)](https://github.com/unknownsideofme/dependency-resolver/actions/workflows/e2e.yml)
 [![license](https://img.shields.io/npm/l/node-dep-resolver.svg)](https://github.com/unknownsideofme/dependency-resolver/blob/main/LICENSE)
 
 `node-dep-resolver` analyzes package dependencies, constructs visual dependency trees, highlights version conflicts across transitive packages, and uses a backtracking algorithm to find compatible resolution trees.
