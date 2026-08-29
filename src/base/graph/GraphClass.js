@@ -2,13 +2,17 @@ import buildGraph from "./method/buildGraph.js";
 import printGraph from "./method/printGraph.js";
 
 export default class Graph {
-    static GraphMap = null;
+    static graphMap = null;
 
     constructor() {
-        if (Graph.GraphMap === null) {
-            Graph.GraphMap = new Map();
+        if (Graph.graphMap === null) {
+            Graph.graphMap = new Map();
         }
-        return Graph.GraphMap;
+        this.graphMap = Graph.graphMap;
+    }
+
+    getGraphMap() {
+        return this.graphMap;
     }
 }
 

@@ -1,9 +1,7 @@
 import fs from "fs";
-import { testBuildGraph , testPrintGraph } from "./test/test_graph.js";
-import { testResolveDependencies } from "./test/test_resolver.js";
-import { testAddConstraint, testGetConstraints, testGetConflicts } from "./test/test_constraint.js";
-import { testGenerateCandidates } from "./test/test_candidates.js";
-import { testgetPackageMetadata, testGetPackageVersion, testResolveVersion, testGetVersions } from "./test/test_registry.js";
+import Registry from "./src/base/registry/RegistryClass.js";
+import Graph from "./src/base/graph/GraphClass.js";
+import Resolver from "./src/base/resolver/ResolverClass.js";
 
 async function main() {
   const packageJson = JSON.parse(
@@ -11,54 +9,32 @@ async function main() {
   );
   const dependencies = { ...(packageJson.dependencies || {}) };
 
-  console.log("\n==================== RUNNING TESTS ====================\n");
+  console.log("\n==================== DEPENDENCY RESOLVER DEMO ====================\n");
 
-  // 1. Test Registry Helpers
-  console.log("--- 1. Testing Registry ---");
-  const meta = await testgetPackageMetadata("axios");
-  console.log("Metadata keys:", Object.keys(meta).slice(0, 5));
-  const versionInfo = await testGetPackageVersion("axios", "1.20.0");
-  console.log("Package version name:", versionInfo.name);
-  const resolved = await testResolveVersion("axios", "^1.0.0");
-  console.log("Resolved version:", resolved);
-  const allVersions = await testGetVersions("axios");
-  console.log("First 3 available versions:", allVersions.slice(0, 3));
+  // 1. Using Registry Class
+  console.log("--- 1. Registry Class Demo ---");
+  const registry = new Registry();
+  const resolvedVersion = await registry.resolveVersion("axios", "^1.0.0");
+  console.log(`Resolved '^1.0.0' for axios -> ${resolvedVersion}`);
+  
+  const allVersions = await registry.getVersions("axios");
+  console.log(`Total versions for axios: ${allVersions.length}`);
   console.log();
 
-  // 2. Test Constraint Helpers
-  console.log("--- 2. Testing Constraints ---");
-  testAddConstraint({ "axios": "^1.20.0", "express": "^4.18.2" });
-  const constraints = testGetConstraints();
-  console.log("Has constraint for axios:", constraints.has("axios"));
-  const conflicts = testGetConflicts();
-  console.log("Active conflicts count:", conflicts.size);
+  // 2. Using Graph Class
+  console.log("--- 2. Building Dependency Graph ---");
+  const graphObj = new Graph();
+  const graph = await graphObj.buildGraph(dependencies);
+
+  console.log("\n========== DEPENDENCY GRAPH ==========\n");
+  graphObj.printGraph(graph);
   console.log();
 
-  // 3. Test Graph Building
-  console.log("--- 3. Testing Graph Builder ---");
-  const graph = await testBuildGraph(dependencies);
-  await testPrintGraph(graph);
-  console.log();
+  // 3. Using Resolver Class
+  console.log("--- 3. Resolving Conflicts ---");
+  const resolver = new Resolver(dependencies);
+  const solution = await resolver.resolve();
 
-  // 4. Test Candidates
-  console.log("--- 4. Testing Candidates ---");
-  const dummyConflict = {
-    packageName: "debug",
-    constraints: [
-      { requester: "express@4.18.2", range: "2.6.9" },
-      { requester: "https-proxy-agent@5.0.1", range: "4" }
-    ]
-  };
-  const candidates = await testGenerateCandidates(dummyConflict);
-  console.log("Generated candidate fixes count:", candidates.length);
-  if (candidates.length > 0) {
-    console.log("First candidate fix:", candidates[0]);
-  }
-  console.log();
-
-  // 5. Test Resolver
-  console.log("--- 5. Testing Resolver ---");
-  const solution = await testResolveDependencies(dependencies);
   console.log("\n========== FINAL SOLVED DEPENDENCIES ==========\n");
   for (const [name, packageData] of solution) {
     console.log(`${name}@${packageData.version}`);
@@ -66,5 +42,5 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error("\n❌ Error during test run:", error.message);
+  console.error("\n❌ Error during execution:", error.message);
 });
