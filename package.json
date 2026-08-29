@@ -1,5 +1,5 @@
 {
-  "name": "@unknownsideofme/dependency-resolver",
+  "name": "node-dep-resolver",
   "version": "1.0.0",
   "description": "A lightweight CLI tool & library to build dependency graphs and resolve semver conflicts.",
   "type": "module",
