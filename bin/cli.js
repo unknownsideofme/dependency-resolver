@@ -44,7 +44,12 @@ async function runCli() {
 
   console.log("\n========== RESOLVED DEPENDENCY SOLUTION ==========\n");
   for (const [name, packageData] of solution) {
-    console.log(`  [OK] ${name}@${packageData.version}`);
+    const requestedRange = dependencies[name];
+    if (requestedRange) {
+      console.log(`  [OK] ${name}: ${packageData.version} (satisfies requested range '${requestedRange}')`);
+    } else {
+      console.log(`  [OK] ${name}: ${packageData.version} (requested by ${packageData.requestedBy})`);
+    }
   }
   console.log();
 }

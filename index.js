@@ -37,7 +37,12 @@ async function main() {
 
   console.log("\n========== FINAL SOLVED DEPENDENCIES ==========\n");
   for (const [name, packageData] of solution) {
-    console.log(`${name}@${packageData.version}`);
+    const requestedRange = dependencies[name];
+    if (requestedRange) {
+      console.log(`  [OK] ${name}: ${packageData.version} (satisfies requested range '${requestedRange}')`);
+    } else {
+      console.log(`  [OK] ${name}: ${packageData.version} (requested by ${packageData.requestedBy})`);
+    }
   }
 }
 
