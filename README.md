@@ -35,6 +35,25 @@ npm install -g node-dep-resolver
 dep-resolver ./package.json
 ```
 
+### 📦 Installing from Tarball (`.tgz`)
+
+You can also install `node-dep-resolver` directly from a packaged `.tgz` archive without downloading from the public npm registry:
+
+1. Generate or obtain the tarball archive (`node-dep-resolver-1.1.5.tgz`):
+   ```bash
+   npm pack
+   ```
+
+2. Install the `.tgz` archive into any project:
+   ```bash
+   npm install ./node-dep-resolver-1.1.5.tgz
+   ```
+
+3. Run the CLI directly:
+   ```bash
+   npx dep-resolver ./package.json
+   ```
+
 ### CLI Output Preview
 
 ```text
