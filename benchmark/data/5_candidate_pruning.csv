@@ -7,4 +7,4 @@ Conflict package,commander
 Candidates from generateCandidates(),99
 Total version ranges in constraint map,313
 Candidate reduction,68.4%
-generateCandidates() duration (ms),14.7
+generateCandidates() duration (ms),14.1
