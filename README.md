@@ -15,13 +15,12 @@
 - **Semver Conflict Detection**: Identifies overlapping or incompatible version constraints requested across different packages.
 - **Backtracking Resolution Engine**: Evaluates alternative candidate package versions to automatically resolve conflicts.
 - **CLI & Programmatic Library**: Use instantly via `npx node-dep-resolver` or import into Node.js ES Module projects.
-- **Native Unit Testing**: High-reliability codebase verified using Node.js native `node:test` framework.
 
 ---
 
 ## Installation & CLI Usage
 
-You can run the CLI directly on any `package.json` file without installing:
+You can run the CLI directly on any `package.json` file:
 
 ```bash
 npx node-dep-resolver ./package.json
@@ -57,9 +56,9 @@ Starting resolution...
 
 ========== RESOLVED DEPENDENCY SOLUTION ==========
 
-  [OK] express@4.18.2
-  [OK] express-rate-limit@7.5.0
-  [OK] axios@1.20.0
+  [OK] express: 4.18.2 (satisfies requested range '4.18.2')
+  [OK] express-rate-limit: 7.5.0 (satisfies requested range '7.5.0')
+  [UPGRADE] axios: 1.7.0 -> 1.20.0 (satisfies requested range '^1.7.0')
 ```
 
 ---
