@@ -1,10 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import Registry from "../src/base/registry/RegistryClass.js"; 
-import Dependency from "../src/base/dependencies/DependencyClass.js";
+import Registry from "../../src/base/registry/RegistryClass.js";
+import Dependency from "../../src/base/dependencies/DependencyClass.js";
 
-const metadataCache = new Dependency(); 
-const registry = new Registry(metadataCache); 
+const metadataCache = new Dependency();
+const registry = new Registry(metadataCache);
 
 export const testgetPackageMetadata = async (pkgName) => {
     const metadata = await registry.getPackageMetadata(pkgName);

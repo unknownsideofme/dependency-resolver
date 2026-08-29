@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import Candidates from '../src/base/candidate/CandidateClass.js';
+import Candidates from '../../src/base/candidate/CandidateClass.js';
 
 test('Candidates Class Test Suite', async (t) => {
     const candidateObj = new Candidates();

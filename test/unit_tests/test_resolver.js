@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import Resolver from '../src/base/resolver/ResolverClass.js';
+import Resolver from '../../src/base/resolver/ResolverClass.js';
 
 test('Resolver Class Test Suite', async (t) => {
     const testDeps = {

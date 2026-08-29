@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import Graph from '../src/base/graph/GraphClass.js';
+import Graph from '../../src/base/graph/GraphClass.js';
 
 test('Graph Class Test Suite', async (t) => {
     const graphObj = new Graph();
