@@ -5,6 +5,7 @@ import Constraint from "./base/constraints/ConstraintClass.js";
 import Candidates from "./base/candidate/CandidateClass.js";
 import Dependency from "./base/dependencies/DependencyClass.js";
 import Conflict from "./base/conflicts/ConflictClass.js";
+import { buildResolveCommand } from "./cli/resolveCommand.js";
 
 export {
   Resolver,
@@ -13,7 +14,8 @@ export {
   Constraint,
   Candidates,
   Dependency,
-  Conflict
+  Conflict,
+  buildResolveCommand
 };
 
 export default Resolver;
