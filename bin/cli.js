@@ -5,6 +5,7 @@ import path from "path";
 import semver from "semver";
 import Graph from "../src/base/graph/GraphClass.js";
 import Resolver from "../src/base/resolver/ResolverClass.js";
+import { buildResolveCommand } from "../src/cli/resolveCommand.js";
 
 function formatSolutionLine(name, packageData, requestedRange) {
   if (requestedRange) {
@@ -74,6 +75,10 @@ async function runCli() {
     const requestedRange = dependencies[name];
     console.log(formatSolutionLine(name, packageData, requestedRange));
   }
+  const copyableCommand = buildResolveCommand(dependencies, solution);
+  console.log();
+  console.log("[INFO] To resolve the conflicting dependencies in your project, copy and run:");
+  console.log(`  ${copyableCommand}`);
   console.log();
 }
 
