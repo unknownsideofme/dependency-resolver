@@ -19,6 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
       - name: Setup Node.js 20
@@ -46,5 +47,5 @@ jobs:
           if ! git diff --cached --quiet; then
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
             git commit -m "chore(benchmark): daily run ${TIMESTAMP} [skip ci]"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           fi
