@@ -1,0 +1,9 @@
+{
+  "upgradables": [],
+  "downgradables": [],
+  "commands": {
+    "upgrade": "",
+    "downgrade": "",
+    "all": ""
+  }
+}

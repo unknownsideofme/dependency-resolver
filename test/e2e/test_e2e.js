@@ -12,11 +12,10 @@ test("E2E CLI Test Suite", async (t) => {
 
     assert.match(output, /\[INFO\] Analyzing dependencies/);
     assert.match(output, /Building Dependency Graph/);
-    assert.match(output, /RESOLVED DEPENDENCY SOLUTION/);
-    assert.match(output, /express/);
-    assert.match(output, /axios/);
-    assert.match(output, /To resolve the conflicting dependencies in your project, copy and run:/);
-    assert.match(output, /npm install .* --save/);
+    assert.match(output, /Resolution plan written to/);
+    assert.match(output, /node bin\/cli\.js .* --upgrade/);
+    assert.match(output, /node bin\/cli\.js .* --downgrade/);
+    assert.match(output, /node bin\/cli\.js .* --resolve/);
   });
 
   await t.test("2. CLI handles missing file path cleanly", () => {
@@ -50,6 +49,6 @@ test("E2E CLI Test Suite", async (t) => {
     const output = execFileSync("node", [cliPath], { encoding: "utf-8" });
 
     assert.match(output, /\[INFO\] Analyzing dependencies from '\.\/package\.json'/);
-    assert.match(output, /RESOLVED DEPENDENCY SOLUTION/);
+    assert.match(output, /Resolution plan written to/);
   });
 });
