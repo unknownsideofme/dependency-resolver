@@ -5,6 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
+    "dependency-resolver": "bin/cli.js",
     "dep-resolver": "bin/cli.js"
   },
   "exports": {
