@@ -79,10 +79,11 @@ async function runCli() {
   const plan = buildResolvePlan(dependencies, solution, path.dirname(absolutePath));
   const planPath = writeResolvePlan(plan, path.dirname(absolutePath));
   console.log(`[INFO] Resolution plan written to '${planPath}'`);
-  console.log("[INFO] Available flags:");
-  console.log("  --upgrade");
-  console.log("  --downgrade");
-  console.log("  --resolve");
+  const cliTarget = targetPath.includes(" ") ? `"${targetPath}"` : targetPath;
+  console.log("[INFO] Run one of these commands when ready:");
+  console.log(`  node bin/cli.js ${cliTarget} --upgrade`);
+  console.log(`  node bin/cli.js ${cliTarget} --downgrade`);
+  console.log(`  node bin/cli.js ${cliTarget} --resolve`);
   if (plan.commands.all) {
     console.log("[INFO] Generated npm command:");
     console.log(`  ${plan.commands.all}`);

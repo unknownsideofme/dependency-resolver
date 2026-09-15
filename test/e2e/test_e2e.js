@@ -13,10 +13,9 @@ test("E2E CLI Test Suite", async (t) => {
     assert.match(output, /\[INFO\] Analyzing dependencies/);
     assert.match(output, /Building Dependency Graph/);
     assert.match(output, /Resolution plan written to/);
-    assert.match(output, /  --upgrade/);
-    assert.match(output, /  --downgrade/);
-    assert.match(output, /  --resolve/);
-    assert.doesNotMatch(output, /node bin\/cli\.js/);
+    assert.match(output, /node bin\/cli\.js .* --upgrade/);
+    assert.match(output, /node bin\/cli\.js .* --downgrade/);
+    assert.match(output, /node bin\/cli\.js .* --resolve/);
   });
 
   await t.test("2. CLI handles missing file path cleanly", () => {
