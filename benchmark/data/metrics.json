@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-08-29T17:10:20.061Z",
+    "generatedAt": "2026-09-15T16:59:13.248Z",
     "source": "benchmark/data/*.csv",
     "description": "Benchmark metrics for the node-dep-resolver dependency resolver"
   },
@@ -12,47 +12,47 @@
       "rows": [
         {
           "Target Packages": 100,
-          "Packages Analyzed": 60,
-          "Dependency Edges": 59,
-          "Unique Packages": 52,
-          "Max Depth": 4,
-          "Time (ms)": 0.43,
+          "Packages Analyzed": 89,
+          "Dependency Edges": 88,
+          "Unique Packages": 89,
+          "Max Depth": 5,
+          "Time (ms)": 0.28,
           "Formatted Time": 0,
-          "Memory (MB)": 1.2,
-          "Formatted Memory": "1.2 MB"
+          "Memory (MB)": 1.5,
+          "Formatted Memory": "1.5 MB"
         },
         {
           "Target Packages": 500,
-          "Packages Analyzed": 1246,
-          "Dependency Edges": 2116,
-          "Unique Packages": 936,
-          "Max Depth": 63,
-          "Time (ms)": 1.36,
+          "Packages Analyzed": 1290,
+          "Dependency Edges": 2395,
+          "Unique Packages": 916,
+          "Max Depth": 92,
+          "Time (ms)": 1.05,
           "Formatted Time": 1,
-          "Memory (MB)": 6.8,
-          "Formatted Memory": "6.8 MB"
+          "Memory (MB)": 6.9,
+          "Formatted Memory": "6.9 MB"
         },
         {
           "Target Packages": 1000,
-          "Packages Analyzed": 4418,
-          "Dependency Edges": 11646,
-          "Unique Packages": 2402,
-          "Max Depth": 466,
-          "Time (ms)": 7.11,
-          "Formatted Time": 7,
-          "Memory (MB)": 14.8,
-          "Formatted Memory": "14.8 MB"
+          "Packages Analyzed": 3887,
+          "Dependency Edges": 10062,
+          "Unique Packages": 2145,
+          "Max Depth": 364,
+          "Time (ms)": 4.87,
+          "Formatted Time": 5,
+          "Memory (MB)": 14.4,
+          "Formatted Memory": "14.4 MB"
         },
         {
           "Target Packages": 5000,
-          "Packages Analyzed": 19417,
-          "Dependency Edges": 66328,
-          "Unique Packages": 6815,
-          "Max Depth": 2868,
-          "Time (ms)": 44.45,
-          "Formatted Time": 44,
-          "Memory (MB)": 63.9,
-          "Formatted Memory": "63.9 MB"
+          "Packages Analyzed": 20235,
+          "Dependency Edges": 72905,
+          "Unique Packages": 6898,
+          "Max Depth": 3030,
+          "Time (ms)": 37.92,
+          "Formatted Time": 38,
+          "Memory (MB)": 65.9,
+          "Formatted Memory": "65.9 MB"
         }
       ],
       "chart": {
@@ -75,19 +75,19 @@
           {
             "label": "Time (ms)",
             "data": [
-              0.43,
-              1.36,
-              7.11,
-              44.45
+              0.28,
+              1.05,
+              4.87,
+              37.92
             ]
           },
           {
             "label": "Memory (MB)",
             "data": [
-              1.2,
-              6.8,
-              14.8,
-              63.9
+              1.5,
+              6.9,
+              14.4,
+              65.9
             ]
           }
         ]
@@ -101,44 +101,44 @@
         {
           "Constraint Count": 100,
           "Label": 100,
-          "Naive Time (ms)": 0.55,
-          "Indexed Time (ms)": 0.26,
-          "Speedup": 2.07
+          "Naive Time (ms)": 0.56,
+          "Indexed Time (ms)": 0.3,
+          "Speedup": 1.87
         },
         {
           "Constraint Count": 500,
           "Label": 500,
-          "Naive Time (ms)": 2.12,
-          "Indexed Time (ms)": 0.32,
-          "Speedup": 6.53
+          "Naive Time (ms)": 1.95,
+          "Indexed Time (ms)": 0.39,
+          "Speedup": 4.95
         },
         {
           "Constraint Count": 1000,
           "Label": "1K",
-          "Naive Time (ms)": 6.22,
-          "Indexed Time (ms)": 0.5,
-          "Speedup": 12.44
+          "Naive Time (ms)": 4.57,
+          "Indexed Time (ms)": 0.63,
+          "Speedup": 7.26
         },
         {
           "Constraint Count": 5000,
           "Label": "5K",
-          "Naive Time (ms)": 129.19,
-          "Indexed Time (ms)": 2.14,
-          "Speedup": 60.34
+          "Naive Time (ms)": 100.19,
+          "Indexed Time (ms)": 1.76,
+          "Speedup": 57.01
         },
         {
           "Constraint Count": 10000,
           "Label": "10K",
-          "Naive Time (ms)": 182.22,
-          "Indexed Time (ms)": 3.31,
-          "Speedup": 55.06
+          "Naive Time (ms)": 144.22,
+          "Indexed Time (ms)": 5.99,
+          "Speedup": 24.06
         },
         {
           "Constraint Count": 50000,
           "Label": "50K",
-          "Naive Time (ms)": 681.15,
-          "Indexed Time (ms)": 4.45,
-          "Speedup": 152.95
+          "Naive Time (ms)": 455.19,
+          "Indexed Time (ms)": 3.47,
+          "Speedup": 131.02
         }
       ],
       "chart": {
@@ -154,23 +154,23 @@
           {
             "label": "Naive Time (ms)",
             "data": [
-              0.55,
-              2.12,
-              6.22,
-              129.19,
-              182.22,
-              681.15
+              0.56,
+              1.95,
+              4.57,
+              100.19,
+              144.22,
+              455.19
             ]
           },
           {
             "label": "Indexed Time (ms)",
             "data": [
-              0.26,
-              0.32,
-              0.5,
-              2.14,
-              3.31,
-              4.45
+              0.3,
+              0.39,
+              0.63,
+              1.76,
+              5.99,
+              3.47
             ]
           }
         ]
@@ -331,7 +331,7 @@
         },
         {
           "Metric": "Constraints added via Constraint.addConstraint()",
-          "Value": 313
+          "Value": 311
         },
         {
           "Metric": "Real conflicts detected (Constraint.getConflicts().size)",
@@ -347,27 +347,27 @@
         },
         {
           "Metric": "Total version ranges in constraint map",
-          "Value": 313
+          "Value": 311
         },
         {
           "Metric": "Candidate reduction",
-          "Value": 68.4
+          "Value": 68.2
         },
         {
           "Metric": "generateCandidates() duration (ms)",
-          "Value": 12.9
+          "Value": 10.9
         }
       ],
       "summary": {
         "Config package pool (large-package.json)": 5000,
         "Packages fetched via Registry.getPackageMetadata()": 30,
-        "Constraints added via Constraint.addConstraint()": 313,
+        "Constraints added via Constraint.addConstraint()": 311,
         "Real conflicts detected (Constraint.getConflicts().size)": 3,
         "Conflict package": "commander",
         "Candidates from generateCandidates()": 99,
-        "Total version ranges in constraint map": 313,
-        "Candidate reduction": 68.4,
-        "generateCandidates() duration (ms)": 12.9
+        "Total version ranges in constraint map": 311,
+        "Candidate reduction": 68.2,
+        "generateCandidates() duration (ms)": 10.9
       }
     },
     "resolutionQuality": {
@@ -385,7 +385,7 @@
         },
         {
           "Metric": "Constraints added via Constraint.addConstraint()",
-          "Value": 394
+          "Value": 392
         },
         {
           "Metric": "Conflicts detected (Constraint.getConflicts().size)",
@@ -409,11 +409,11 @@
         },
         {
           "Metric": "Major upgrades",
-          "Value": 5
+          "Value": 6
         },
         {
           "Metric": "Minor upgrades",
-          "Value": 0
+          "Value": 1
         },
         {
           "Metric": "Patch upgrades",
@@ -429,29 +429,29 @@
         },
         {
           "Metric": "Registry + Constraint phase (ms)",
-          "Value": 1536.43
+          "Value": 2191.39
         },
         {
           "Metric": "Resolver phase (ms)",
-          "Value": 7.93
+          "Value": 4.84
         }
       ],
       "summary": {
         "Config package pool": 5000,
         "Packages fetched via Registry.getPackageMetadata()": 40,
-        "Constraints added via Constraint.addConstraint()": 394,
+        "Constraints added via Constraint.addConstraint()": 392,
         "Conflicts detected (Constraint.getConflicts().size)": 7,
         "Resolver conflicts (Resolver.checkConflict())": 7,
         "Solutions discovered": 7,
         "Best solution": "#3 (major required)",
         "Changes required": 7,
-        "Major upgrades": 5,
-        "Minor upgrades": 0,
+        "Major upgrades": 6,
+        "Minor upgrades": 1,
         "Patch upgrades": 0,
         "Duplicate version packages": 0,
         "Backtracks (createSnapshot + restoreSnapshot)": 10,
-        "Registry + Constraint phase (ms)": 1536.43,
-        "Resolver phase (ms)": 7.93
+        "Registry + Constraint phase (ms)": 2191.39,
+        "Resolver phase (ms)": 4.84
       }
     },
     "capabilityMatrix": {
@@ -525,11 +525,11 @@
           "Project": "Vite app",
           "Packages Fetched": 25,
           "Graph Nodes": 25,
-          "Edges": 62,
+          "Edges": 60,
           "Conflicts": 6,
-          "Constraint (ms)": 0.5,
-          "Resolver (ms)": 0.1,
-          "Total (ms)": 0.6
+          "Constraint (ms)": 0.4,
+          "Resolver (ms)": 0,
+          "Total (ms)": 0.5
         },
         {
           "Project": "Next app",
@@ -537,19 +537,19 @@
           "Graph Nodes": 35,
           "Edges": 370,
           "Conflicts": 4,
-          "Constraint (ms)": 1.5,
-          "Resolver (ms)": 7,
-          "Total (ms)": 8.6
+          "Constraint (ms)": 1.2,
+          "Resolver (ms)": 6.8,
+          "Total (ms)": 8.1
         },
         {
           "Project": "Large project",
           "Packages Fetched": 50,
           "Graph Nodes": 50,
-          "Edges": 561,
-          "Conflicts": 19,
-          "Constraint (ms)": 3170.6,
-          "Resolver (ms)": 2.3,
-          "Total (ms)": 3172.9
+          "Edges": 548,
+          "Conflicts": 18,
+          "Constraint (ms)": 4619.3,
+          "Resolver (ms)": 1.8,
+          "Total (ms)": 4621.1
         }
       ],
       "chart": {
@@ -564,9 +564,9 @@
             "label": "Edges",
             "data": [
               0,
-              62,
+              60,
               370,
-              561
+              548
             ]
           },
           {
@@ -575,16 +575,16 @@
               7,
               6,
               4,
-              19
+              18
             ]
           },
           {
             "label": "Total (ms)",
             "data": [
               0.1,
-              0.6,
-              8.6,
-              3172.9
+              0.5,
+              8.1,
+              4621.1
             ]
           }
         ]
@@ -829,7 +829,7 @@
         },
         {
           "Metric": "Execution time",
-          "Value": 0.31
+          "Value": 0.25
         }
       ],
       "summary": {
@@ -840,7 +840,7 @@
         "Invalid solutions accepted": 0,
         "Conflicts discovered": 3218,
         "Resolution validity": 100,
-        "Execution time": 0.31
+        "Execution time": 0.25
       }
     },
     "resolutionComplexity": {
@@ -863,8 +863,8 @@
           "Candidates": 31,
           "Backtracks": 3,
           "Pruned": 42,
-          "Time (ms)": 16,
-          "Formatted Time": 16
+          "Time (ms)": 15,
+          "Formatted Time": 15
         },
         {
           "Scenario": "Dense",
@@ -872,8 +872,8 @@
           "Candidates": 126,
           "Backtracks": 12,
           "Pruned": 89,
-          "Time (ms)": 50,
-          "Formatted Time": 50
+          "Time (ms)": 48,
+          "Formatted Time": 48
         },
         {
           "Scenario": "Adversarial",
@@ -881,8 +881,8 @@
           "Candidates": 480,
           "Backtracks": 41,
           "Pruned": 395,
-          "Time (ms)": 181,
-          "Formatted Time": 181
+          "Time (ms)": 173,
+          "Formatted Time": 173
         }
       ],
       "chart": {
@@ -933,9 +933,9 @@
             "label": "Time (ms)",
             "data": [
               4,
-              16,
-              50,
-              181
+              15,
+              48,
+              173
             ]
           }
         ]
