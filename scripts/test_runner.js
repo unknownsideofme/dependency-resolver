@@ -4,7 +4,7 @@ import path from "path";
 
 const args = process.argv.slice(2);
 
-let testFiles = [];
+let command = "";
 
 const isUnit = args.some((arg) => arg === "--unit" || arg === "--units");
 const isE2E = args.some((arg) => arg === "--e2e");
@@ -23,28 +23,17 @@ if (fileArg) {
       targetFile = path.join("test/e2e", `${fileArg}.js`);
     }
   }
-  testFiles = [targetFile];
+  command = `node --test ${targetFile}`;
 } else if (isUnit) {
-  testFiles = fs.readdirSync("test/unit_tests")
-    .filter((file) => file.endsWith(".js"))
-    .map((file) => path.join("test/unit_tests", file));
+  command = `node --test test/unit_tests/*.js`;
 } else if (isE2E) {
-  testFiles = fs.readdirSync("test/e2e")
-    .filter((file) => file.endsWith(".js"))
-    .map((file) => path.join("test/e2e", file));
+  command = `node --test test/e2e/*.js`;
 } else {
   // Default: Run all Unit Tests + E2E Tests
-  testFiles = [
-    ...fs.readdirSync("test/unit_tests")
-      .filter((file) => file.endsWith(".js"))
-      .map((file) => path.join("test/unit_tests", file)),
-    ...fs.readdirSync("test/e2e")
-      .filter((file) => file.endsWith(".js"))
-      .map((file) => path.join("test/e2e", file))
-  ];
+  command = `node --test test/unit_tests/*.js test/e2e/*.js`;
 }
 
-const child = spawn("node", ["--test", ...testFiles], { stdio: "inherit" });
+const child = spawn(command, { shell: true, stdio: "inherit" });
 child.on("exit", (code) => {
   process.exit(code || 0);
 });
