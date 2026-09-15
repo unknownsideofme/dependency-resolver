@@ -5,42 +5,36 @@ import path from "path";
 import semver from "semver";
 import Graph from "../src/base/graph/GraphClass.js";
 import Resolver from "../src/base/resolver/ResolverClass.js";
-import { buildResolvePlan, readResolvePlan, writeResolvePlan } from "../src/cli/resolvePlan.js";
+import { buildResolveCommand } from "../src/cli/resolveCommand.js";
 
-function parseArguments() {
-  const args = process.argv.slice(2);
-  const flags = new Set(args.filter((arg) => arg.startsWith("--")));
-  const targetPath = args.find((arg) => !arg.startsWith("--")) || "./package.json";
-  return { flags, targetPath };
+function formatSolutionLine(name, packageData, requestedRange) {
+  if (requestedRange) {
+    const minVerObj = semver.minVersion(requestedRange);
+    const minVer = minVerObj ? minVerObj.version : requestedRange;
+
+    if (semver.valid(packageData.version) && semver.valid(minVer)) {
+      if (semver.gt(packageData.version, minVer)) {
+        return `  [UPGRADE] ${name}: ${minVer} -> ${packageData.version} (satisfies requested range '${requestedRange}')`;
+      } else if (semver.lt(packageData.version, minVer)) {
+        return `  [DOWNGRADE] ${name}: ${minVer} -> ${packageData.version} (satisfies requested range '${requestedRange}')`;
+      }
+    }
+    return `  [OK] ${name}: ${packageData.version} (satisfies requested range '${requestedRange}')`;
+  }
+
+  if (packageData.oldVersion && semver.valid(packageData.version) && semver.valid(packageData.oldVersion)) {
+    if (semver.gt(packageData.version, packageData.oldVersion)) {
+      return `  [UPGRADE] ${name}: ${packageData.oldVersion} -> ${packageData.version} (to resolve conflict)`;
+    } else if (semver.lt(packageData.version, packageData.oldVersion)) {
+      return `  [DOWNGRADE] ${name}: ${packageData.oldVersion} -> ${packageData.version} (to resolve conflict)`;
+    }
+  }
+
+  return `  [OK] ${name}: ${packageData.version} (requested by ${packageData.requestedBy || 'ROOT'})`;
 }
 
 async function runCli() {
-  const { flags, targetPath } = parseArguments();
-
-  if (flags.has("--upgrade") || flags.has("--downgrade") || flags.has("--resolve")) {
-    const targetRoot = targetPath === "./package.json"
-      ? process.cwd()
-      : path.dirname(path.resolve(process.cwd(), targetPath));
-    const { plan } = readResolvePlan(targetRoot);
-    const command = flags.has("--resolve")
-      ? plan.commands.all
-      : flags.has("--upgrade")
-        ? plan.commands.upgrade
-        : plan.commands.downgrade;
-
-    if (!command) {
-      console.log("[INFO] No packages found for the selected operation.");
-      return;
-    }
-
-    console.log(command);
-    if (flags.has("--resolve")) {
-      const { execSync } = await import("child_process");
-      execSync(command, { cwd: targetRoot, stdio: "inherit" });
-    }
-    return;
-  }
-
+  const targetPath = process.argv[2] || "./package.json";
   const absolutePath = path.resolve(process.cwd(), targetPath);
 
   if (!fs.existsSync(absolutePath)) {
@@ -76,19 +70,16 @@ async function runCli() {
   const resolver = new Resolver(dependencies);
   const solution = await resolver.resolve();
 
-  const plan = buildResolvePlan(dependencies, solution, path.dirname(absolutePath));
-  const planPath = writeResolvePlan(plan, path.dirname(absolutePath));
-  console.log(`[INFO] Resolution plan written to '${planPath}'`);
-  console.log("[INFO] Available flags:");
-  console.log("  --upgrade");
-  console.log("  --downgrade");
-  console.log("  --resolve");
-  if (plan.commands.all) {
-    console.log("[INFO] Generated npm command:");
-    console.log(`  ${plan.commands.all}`);
-  } else {
-    console.log("[INFO] No package changes are required.");
+  console.log("\n========== RESOLVED DEPENDENCY SOLUTION ==========\n");
+  for (const [name, packageData] of solution) {
+    const requestedRange = dependencies[name];
+    console.log(formatSolutionLine(name, packageData, requestedRange));
   }
+  const copyableCommand = buildResolveCommand(dependencies, solution);
+  console.log();
+  console.log("[INFO] To resolve the conflicting dependencies in your project, copy and run:");
+  console.log(`  ${copyableCommand}`);
+  console.log();
 }
 
 runCli().catch((err) => {
