@@ -8,7 +8,7 @@ Highly constrained,25,480,219,1.00,1 ms
 
 --- CONFLICT SCALING BENCHMARK ---
 Conflicts,Resolution Time (ms),Formatted Time
-10,7.44,7 ms
-20,11.29,11 ms
-30,12.76,13 ms
-40,16.08,16 ms
+10,6.18,6 ms
+20,8.81,9 ms
+30,10.10,10 ms
+40,14.81,15 ms
