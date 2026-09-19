@@ -40,9 +40,7 @@ async function runCli() {
     }
     return;
   }
-
   const absolutePath = path.resolve(process.cwd(), targetPath);
-
   if (!fs.existsSync(absolutePath)) {
     console.error(`[ERROR] File not found at '${absolutePath}'`);
     process.exit(1);
