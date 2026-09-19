@@ -49,7 +49,7 @@ jobs:
       # This is PR #1233, pinned to the exact commit that you
       # tested locally.
       # ------------------------------------------------------------
-      - name: Build reviewer
+            - name: Build reviewer
         shell: bash
         run: |
           set -euo pipefail
@@ -57,7 +57,12 @@ jobs:
           git clone https://github.com/alibaba/open-code-review.git /tmp/open-code-review
           cd /tmp/open-code-review
 
-          git checkout 058d0cb8d99a5254079205ac73abcba2cdc25160
+          # PR #1233 is the source of our working reviewer build.
+          git fetch origin pull/1233/head:pr-1233
+          git checkout pr-1233
+
+          echo "Building reviewer from:"
+          git log -1 --oneline
 
           go build \
             -ldflags "-s -w -X main.Version=1.12.7-pr1233" \
