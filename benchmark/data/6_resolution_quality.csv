@@ -12,5 +12,5 @@ Minor upgrades,1
 Patch upgrades,0
 Duplicate version packages,0
 Backtracks (createSnapshot + restoreSnapshot),10
-Registry + Constraint phase (ms),2067.53
-Resolver phase (ms),5.69
+Registry + Constraint phase (ms),2009.31
+Resolver phase (ms),16.99
