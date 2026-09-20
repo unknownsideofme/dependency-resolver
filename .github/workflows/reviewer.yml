@@ -49,7 +49,7 @@ jobs:
       # This is PR #1233, pinned to the exact commit that you
       # tested locally.
       # ------------------------------------------------------------
-            - name: Build reviewer
+      - name: Build reviewer
         shell: bash
         run: |
           set -euo pipefail
