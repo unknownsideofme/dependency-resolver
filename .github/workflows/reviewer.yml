@@ -1,4 +1,3 @@
-```yaml
 name: AI Code Review
 
 on:
@@ -177,4 +176,3 @@ jobs:
             }
 
             const c
-```
