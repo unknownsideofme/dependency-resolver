@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T13:21:07.667Z",
+    "generatedAt": "2026-09-20T13:26:53.815Z",
     "source": "benchmark/data/*.csv",
     "description": "Benchmark metrics for the node-dep-resolver dependency resolver"
   },
@@ -12,47 +12,47 @@
       "rows": [
         {
           "Target Packages": 100,
-          "Packages Analyzed": 111,
-          "Dependency Edges": 110,
-          "Unique Packages": 104,
-          "Max Depth": 6,
-          "Time (ms)": 0.46,
+          "Packages Analyzed": 14,
+          "Dependency Edges": 13,
+          "Unique Packages": 14,
+          "Max Depth": 4,
+          "Time (ms)": 0.28,
           "Formatted Time": 0,
           "Memory (MB)": 1.2,
           "Formatted Memory": "1.2 MB"
         },
         {
           "Target Packages": 500,
-          "Packages Analyzed": 1125,
-          "Dependency Edges": 2057,
-          "Unique Packages": 817,
-          "Max Depth": 68,
-          "Time (ms)": 1.28,
+          "Packages Analyzed": 1250,
+          "Dependency Edges": 2002,
+          "Unique Packages": 912,
+          "Max Depth": 49,
+          "Time (ms)": 1.23,
           "Formatted Time": 1,
           "Memory (MB)": 6.8,
           "Formatted Memory": "6.8 MB"
         },
         {
           "Target Packages": 1000,
-          "Packages Analyzed": 3797,
-          "Dependency Edges": 9885,
-          "Unique Packages": 2078,
-          "Max Depth": 399,
-          "Time (ms)": 7.28,
-          "Formatted Time": 7,
-          "Memory (MB)": 14.9,
-          "Formatted Memory": "14.9 MB"
+          "Packages Analyzed": 4125,
+          "Dependency Edges": 11096,
+          "Unique Packages": 2271,
+          "Max Depth": 446,
+          "Time (ms)": 10.79,
+          "Formatted Time": 11,
+          "Memory (MB)": 16,
+          "Formatted Memory": "16.0 MB"
         },
         {
           "Target Packages": 5000,
-          "Packages Analyzed": 20462,
-          "Dependency Edges": 73248,
-          "Unique Packages": 6918,
-          "Max Depth": 3127,
-          "Time (ms)": 45.07,
-          "Formatted Time": 45,
-          "Memory (MB)": 65.9,
-          "Formatted Memory": "65.9 MB"
+          "Packages Analyzed": 19320,
+          "Dependency Edges": 65971,
+          "Unique Packages": 6790,
+          "Max Depth": 2875,
+          "Time (ms)": 46.06,
+          "Formatted Time": 46,
+          "Memory (MB)": 72.3,
+          "Formatted Memory": "72.3 MB"
         }
       ],
       "chart": {
@@ -75,10 +75,10 @@
           {
             "label": "Time (ms)",
             "data": [
-              0.46,
-              1.28,
-              7.28,
-              45.07
+              0.28,
+              1.23,
+              10.79,
+              46.06
             ]
           },
           {
@@ -86,8 +86,8 @@
             "data": [
               1.2,
               6.8,
-              14.9,
-              65.9
+              16,
+              72.3
             ]
           }
         ]
@@ -101,44 +101,44 @@
         {
           "Constraint Count": 100,
           "Label": 100,
-          "Naive Time (ms)": 0.58,
-          "Indexed Time (ms)": 0.25,
-          "Speedup": 2.35
+          "Naive Time (ms)": 0.63,
+          "Indexed Time (ms)": 0.26,
+          "Speedup": 2.46
         },
         {
           "Constraint Count": 500,
           "Label": 500,
-          "Naive Time (ms)": 2.55,
-          "Indexed Time (ms)": 0.46,
-          "Speedup": 5.59
+          "Naive Time (ms)": 2.54,
+          "Indexed Time (ms)": 4.75,
+          "Speedup": 0.53
         },
         {
           "Constraint Count": 1000,
           "Label": "1K",
-          "Naive Time (ms)": 6.39,
-          "Indexed Time (ms)": 0.84,
-          "Speedup": 7.59
+          "Naive Time (ms)": 7.11,
+          "Indexed Time (ms)": 1.02,
+          "Speedup": 6.97
         },
         {
           "Constraint Count": 5000,
           "Label": "5K",
-          "Naive Time (ms)": 167.18,
-          "Indexed Time (ms)": 1.99,
-          "Speedup": 84.04
+          "Naive Time (ms)": 132.26,
+          "Indexed Time (ms)": 1.06,
+          "Speedup": 124.9
         },
         {
           "Constraint Count": 10000,
           "Label": "10K",
-          "Naive Time (ms)": 239.18,
-          "Indexed Time (ms)": 6.14,
-          "Speedup": 38.98
+          "Naive Time (ms)": 185.48,
+          "Indexed Time (ms)": 2.43,
+          "Speedup": 76.43
         },
         {
           "Constraint Count": 50000,
           "Label": "50K",
-          "Naive Time (ms)": 699.15,
-          "Indexed Time (ms)": 4.48,
-          "Speedup": 156.23
+          "Naive Time (ms)": 716.78,
+          "Indexed Time (ms)": 9.12,
+          "Speedup": 78.61
         }
       ],
       "chart": {
@@ -154,23 +154,23 @@
           {
             "label": "Naive Time (ms)",
             "data": [
-              0.58,
-              2.55,
-              6.39,
-              167.18,
-              239.18,
-              699.15
+              0.63,
+              2.54,
+              7.11,
+              132.26,
+              185.48,
+              716.78
             ]
           },
           {
             "label": "Indexed Time (ms)",
             "data": [
-              0.25,
-              0.46,
-              0.84,
-              1.99,
-              6.14,
-              4.48
+              0.26,
+              4.75,
+              1.02,
+              1.06,
+              2.43,
+              9.12
             ]
           }
         ]
@@ -187,15 +187,15 @@
           "Cache Hits": 0,
           "Cache Hit Ratio": 0,
           "Network Time (s)": 2.42,
-          "Total Resolution Time (s)": 2.43
+          "Total Resolution Time (s)": 2.42
         },
         {
           "Mode": "Cache",
           "Registry Requests": 37,
           "Cache Hits": 83,
           "Cache Hit Ratio": 69.2,
-          "Network Time (s)": 0.75,
-          "Total Resolution Time (s)": 0.75
+          "Network Time (s)": 0.74,
+          "Total Resolution Time (s)": 0.74
         }
       ],
       "chart": null,
@@ -355,7 +355,7 @@
         },
         {
           "Metric": "generateCandidates() duration (ms)",
-          "Value": 14.4
+          "Value": 17.7
         }
       ],
       "summary": {
@@ -367,7 +367,7 @@
         "Candidates from generateCandidates()": 99,
         "Total version ranges in constraint map": 311,
         "Candidate reduction": 68.2,
-        "generateCandidates() duration (ms)": 14.4
+        "generateCandidates() duration (ms)": 17.7
       }
     },
     "resolutionQuality": {
@@ -429,11 +429,11 @@
         },
         {
           "Metric": "Registry + Constraint phase (ms)",
-          "Value": 2009.31
+          "Value": 1653.11
         },
         {
           "Metric": "Resolver phase (ms)",
-          "Value": 16.99
+          "Value": 7.62
         }
       ],
       "summary": {
@@ -450,8 +450,8 @@
         "Patch upgrades": 0,
         "Duplicate version packages": 0,
         "Backtracks (createSnapshot + restoreSnapshot)": 10,
-        "Registry + Constraint phase (ms)": 2009.31,
-        "Resolver phase (ms)": 16.99
+        "Registry + Constraint phase (ms)": 1653.11,
+        "Resolver phase (ms)": 7.62
       }
     },
     "capabilityMatrix": {
@@ -517,9 +517,9 @@
           "Graph Nodes": 20,
           "Edges": 0,
           "Conflicts": 7,
-          "Constraint (ms)": 0.3,
+          "Constraint (ms)": 0.1,
           "Resolver (ms)": 0,
-          "Total (ms)": 0.3
+          "Total (ms)": 0.1
         },
         {
           "Project": "Vite app",
@@ -527,9 +527,9 @@
           "Graph Nodes": 25,
           "Edges": 60,
           "Conflicts": 6,
-          "Constraint (ms)": 0.8,
-          "Resolver (ms)": 0.2,
-          "Total (ms)": 1
+          "Constraint (ms)": 0.5,
+          "Resolver (ms)": 0.1,
+          "Total (ms)": 0.6
         },
         {
           "Project": "Next app",
@@ -537,9 +537,9 @@
           "Graph Nodes": 35,
           "Edges": 370,
           "Conflicts": 4,
-          "Constraint (ms)": 3.8,
-          "Resolver (ms)": 8.9,
-          "Total (ms)": 12.7
+          "Constraint (ms)": 1.5,
+          "Resolver (ms)": 9,
+          "Total (ms)": 10.6
         },
         {
           "Project": "Large project",
@@ -547,9 +547,9 @@
           "Graph Nodes": 50,
           "Edges": 548,
           "Conflicts": 18,
-          "Constraint (ms)": 4638.3,
-          "Resolver (ms)": 1.8,
-          "Total (ms)": 4640.1
+          "Constraint (ms)": 3209.6,
+          "Resolver (ms)": 3.6,
+          "Total (ms)": 3213.2
         }
       ],
       "chart": {
@@ -581,10 +581,10 @@
           {
             "label": "Total (ms)",
             "data": [
-              0.3,
-              1,
-              12.7,
-              4640.1
+              0.1,
+              0.6,
+              10.6,
+              3213.2
             ]
           }
         ]
@@ -829,7 +829,7 @@
         },
         {
           "Metric": "Execution time",
-          "Value": 0.31
+          "Value": 0.32
         }
       ],
       "summary": {
@@ -840,7 +840,7 @@
         "Invalid solutions accepted": 0,
         "Conflicts discovered": 3218,
         "Resolution validity": 100,
-        "Execution time": 0.31
+        "Execution time": 0.32
       }
     },
     "resolutionComplexity": {
@@ -872,8 +872,8 @@
           "Candidates": 126,
           "Backtracks": 12,
           "Pruned": 89,
-          "Time (ms)": 51,
-          "Formatted Time": 51
+          "Time (ms)": 52,
+          "Formatted Time": 52
         },
         {
           "Scenario": "Adversarial",
@@ -881,8 +881,8 @@
           "Candidates": 480,
           "Backtracks": 41,
           "Pruned": 395,
-          "Time (ms)": 182,
-          "Formatted Time": 182
+          "Time (ms)": 184,
+          "Formatted Time": 184
         }
       ],
       "chart": {
@@ -934,8 +934,8 @@
             "data": [
               4,
               16,
-              51,
-              182
+              52,
+              184
             ]
           }
         ]
