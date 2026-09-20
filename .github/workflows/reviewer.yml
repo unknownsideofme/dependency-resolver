@@ -1,3 +1,4 @@
+```yaml
 name: AI Code Review
 
 on:
@@ -23,10 +24,6 @@ jobs:
     steps:
       # ------------------------------------------------------------
       # 1. Checkout the PR's actual HEAD
-      #
-      # IMPORTANT:
-      # We do NOT execute any code from the PR.
-      # We only need the files/diff for OCR to inspect.
       # ------------------------------------------------------------
       - name: Checkout PR
         uses: actions/checkout@v4
@@ -41,15 +38,12 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: "1.24"
 
       # ------------------------------------------------------------
-      # 3. Build YOUR custom reviewer
-      #
-      # This is PR #1233, pinned to the exact commit that you
-      # tested locally.
+      # 3. Build custom reviewer from PR #1233
       # ------------------------------------------------------------
-            - name: Build reviewer
+      - name: Build reviewer
         shell: bash
         run: |
           set -euo pipefail
@@ -57,7 +51,6 @@ jobs:
           git clone https://github.com/alibaba/open-code-review.git /tmp/open-code-review
           cd /tmp/open-code-review
 
-          # PR #1233 is the source of our working reviewer build.
           git fetch origin pull/1233/head:pr-1233
           git checkout pr-1233
 
@@ -73,8 +66,6 @@ jobs:
 
       # ------------------------------------------------------------
       # 4. Configure Gemini
-      #
-      # The API key comes ONLY from GitHub Actions Secrets.
       # ------------------------------------------------------------
       - name: Configure Gemini
         shell: bash
@@ -106,13 +97,7 @@ jobs:
           reviewer llm test
 
       # ------------------------------------------------------------
-      # 5. Run the review
-      #
-      # We review exactly:
-      #
-      #     PR base SHA -> PR head SHA
-      #
-      # NOT v1.2.0 -> HEAD.
+      # 5. Run AI review
       # ------------------------------------------------------------
       - name: Run AI review
         id: ocr
@@ -143,7 +128,7 @@ jobs:
           echo "======================="
 
       # ------------------------------------------------------------
-      # 6. Upload the raw result for debugging
+      # 6. Upload raw result for debugging
       # ------------------------------------------------------------
       - name: Upload review result
         if: always()
@@ -155,9 +140,6 @@ jobs:
 
       # ------------------------------------------------------------
       # 7. Post findings to GitHub
-      #
-      # Findings with line information become inline review comments.
-      # Findings without valid line information go into the summary.
       # ------------------------------------------------------------
       - name: Post review comments
         if: success()
@@ -194,264 +176,5 @@ jobs:
               return;
             }
 
-            const comments = Array.isArray(result.comments)
-              ? result.comments
-              : [];
-
-            console.log(`reviewer returned ${comments.length} finding(s)`);
-
-            // --------------------------------------------------------
-            // Helpers
-            // --------------------------------------------------------
-
-            function severityLabel(comment) {
-              const category = comment.category || "other";
-              const severity = comment.severity || "unknown";
-
-              return `[${category} · ${severity}]`;
-            }
-
-            function buildBody(comment) {
-              let body = `🤖 **AI Code Review**\n\n`;
-
-              body += `**${severityLabel(comment)}**\n\n`;
-
-              if (comment.content) {
-                body += comment.content.trim();
-                body += "\n";
-              }
-
-              // OCR versions/builds may expose a suggestion using
-              // different field names. Support the common ones.
-              const suggestion =
-                comment.suggestion_content ||
-                comment.suggestion ||
-                comment.suggestion_code;
-
-              if (suggestion) {
-                body += `\n**Suggestion**\n\n`;
-                body += "```suggestion\n";
-                body += suggestion.trim();
-                body += "\n```\n";
-              }
-
-              body += "\n<!-- reviewer-bot -->";
-
-              return body;
-            }
-
-            // --------------------------------------------------------
-            // Separate inline-capable findings from summary findings.
-            // --------------------------------------------------------
-
-            const inlineComments = [];
-            const summaryComments = [];
-
-            for (const comment of comments) {
-              if (!comment.path || !comment.content) {
-                summaryComments.push(comment);
-                continue;
-              }
-
-              const line =
-                Number.isInteger(comment.end_line)
-                  ? comment.end_line
-                  : Number.isInteger(comment.line)
-                    ? comment.line
-                    : null;
-
-              const startLine =
-                Number.isInteger(comment.start_line)
-                  ? comment.start_line
-                  : null;
-
-              if (!line || line < 1) {
-                summaryComments.push(comment);
-                continue;
-              }
-
-              const inline = {
-                path: comment.path,
-                line,
-                side: "RIGHT",
-                body: buildBody(comment)
-              };
-
-              if (startLine && startLine < line) {
-                inline.start_line = startLine;
-                inline.start_side = "RIGHT";
-              }
-
-              inlineComments.push(inline);
-            }
-
-            // --------------------------------------------------------
-            // GitHub limits review-comment batches.
-            // Keep batches conservative.
-            // --------------------------------------------------------
-
-            const BATCH_SIZE = 50;
-
-            let postedInline = 0;
-            let failedInline = 0;
-
-            for (
-              let i = 0;
-              i < inlineComments.length;
-              i += BATCH_SIZE
-            ) {
-              const batch = inlineComments.slice(
-                i,
-                i + BATCH_SIZE
-              );
-
-              try {
-                await github.rest.pulls.createReview({
-                  owner,
-                  repo,
-                  pull_number,
-                  commit_id:
-                    context.payload.pull_request.head.sha,
-                  event: "COMMENT",
-                  comments: batch
-                });
-
-                postedInline += batch.length;
-              } catch (err) {
-                console.log(
-                  `Inline review batch failed: ${err.message}`
-                );
-
-                // If GitHub rejects the batch because one comment
-                // has invalid line information, try them individually.
-                for (const comment of batch) {
-                  try {
-                    await github.rest.pulls.createReview({
-                      owner,
-                      repo,
-                      pull_number,
-                      commit_id:
-                        context.payload.pull_request.head.sha,
-                      event: "COMMENT",
-                      comments: [comment]
-                    });
-
-                    postedInline++;
-                  } catch (individualErr) {
-                    failedInline++;
-
-                    console.log(
-                      `Could not post ${comment.path}:${comment.line}: ` +
-                      individualErr.message
-                    );
-
-                    summaryComments.push({
-                      path: comment.path,
-                      content:
-                        comment.body.replace(
-                          /^🤖 \*\*AI Code Review\*\*\n\n/,
-                          ""
-                        )
-                    });
-                  }
-                }
-              }
-            }
-
-            // --------------------------------------------------------
-            // Build summary comment
-            // --------------------------------------------------------
-
-            let summary =
-              `## 🤖 AI Code Review\n\n`;
-
-            if (comments.length === 0) {
-              summary +=
-                `✅ No issues found in the reviewed changes.\n\n`;
-            } else {
-              summary +=
-                `Found **${comments.length}** issue(s).\n\n`;
-
-              summary +=
-                `- ✅ Inline comments: **${postedInline}**\n`;
-
-              if (summaryComments.length > 0) {
-                summary +=
-                  `- 📝 Summary comments: **${summaryComments.length}**\n`;
-              }
-
-              if (failedInline > 0) {
-                summary +=
-                  `- ⚠️ Failed inline comments: **${failedInline}**\n`;
-              }
-
-              if (summaryComments.length > 0) {
-                summary += `\n---\n\n`;
-
-                for (const comment of summaryComments) {
-                  summary +=
-                    `### 📄 ${comment.path || "General"}\n\n`;
-
-                  summary +=
-                    comment.content || "No description provided.";
-
-                  summary += "\n\n";
-                }
-              }
-            }
-
-            summary +=
-              `\n<sub>Reviewed commit ` +
-              `\`${context.payload.pull_request.head.sha.slice(0, 7)}\` ` +
-              `using reviewer 1.12.7-pr1233 + Gemini.</sub>\n\n`;
-
-            summary += `<!-- reviewer-bot-summary -->`;
-
-            // --------------------------------------------------------
-            // Find an existing bot summary and update it instead of
-            // creating a new summary comment on every push.
-            // --------------------------------------------------------
-
-            const existing =
-              await github.rest.issues.listComments({
-                owner,
-                repo,
-                issue_number: pull_number,
-                per_page: 100
-              });
-
-            const previous = existing.data.find(
-              comment =>
-                comment.user &&
-                comment.user.type === "Bot" &&
-                comment.body &&
-                comment.body.includes(
-                  "<!-- reviewer-bot-summary -->"
-                )
-            );
-
-            if (previous) {
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: previous.id,
-                body: summary
-              });
-
-              console.log(
-                `Updated existing review summary: ${previous.id}`
-              );
-            } else {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: pull_number,
-                body: summary
-              });
-
-              console.log("Created review summary.");
-            }
-
-            console.log(
-              `Posted ${postedInline} inline comment(s).`
-            );
+            const c
+```
