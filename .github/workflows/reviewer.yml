@@ -78,16 +78,16 @@ jobs:
             exit 1
           fi
 
-          reviewer config set custom_providers.gemini.url \
+          reviewer config set providers.gemini.url \
             "https://generativelanguage.googleapis.com/v1beta/openai"
 
-          reviewer config set custom_providers.gemini.protocol \
+          reviewer config set providers.gemini.protocol \
             "openai"
 
-          reviewer config set custom_providers.gemini.model \
+          reviewer config set providers.gemini.model \
             "gemini-3.5-flash-lite"
 
-          reviewer config set custom_providers.gemini.api_key \
+          reviewer config set providers.gemini.api_key \
             "${GEMINI_API_KEY}"
 
           reviewer config set provider gemini
